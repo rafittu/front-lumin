@@ -6,4 +6,10 @@
   font-size: 100%;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+
+  background-image: url('/public/lani.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.1;
 }
