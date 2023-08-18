@@ -1,7 +1,13 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import SignIn from './pages/SignIn';
 
 function App() {
-  return <h1>LUMIN</h1>;
+  return (
+    <Routes>
+      <Route path="/" element={<SignIn />} />
+    </Routes>
+  );
 }
 
 export default App;
