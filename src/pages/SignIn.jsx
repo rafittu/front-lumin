@@ -1,7 +1,13 @@
 import React from 'react';
 
-function App() {
-  return <h1>Sign In</h1>;
+import '../style/SignIn.css';
+
+function SignIn() {
+  return (
+    <div className="signIn">
+      <h1>Sign In</h1>
+    </div>
+  );
 }
 
-export default App;
+export default SignIn;
