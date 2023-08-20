@@ -6,9 +6,11 @@ import './style/App.css';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<SignIn />} />
-    </Routes>
+    <div className="backgroundImage">
+      <Routes>
+        <Route exact path="/" element={<SignIn />} />
+      </Routes>
+    </div>
   );
 }
 
