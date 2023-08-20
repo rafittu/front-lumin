@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  font-size: 100%;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.backgroundImage {
+  background-image: url('/public/lani.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
