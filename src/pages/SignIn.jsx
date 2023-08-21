@@ -11,14 +11,14 @@ function SignIn() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmail = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-  };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-  const handlePassword = (event) => {
-    const { value } = event.target;
-    setPassword(value);
+    if (name === 'email') {
+      setEmail(value);
+    } else {
+      setPassword(value);
+    }
   };
 
   const validateLogin = async () => {
@@ -47,9 +47,10 @@ function SignIn() {
         <div className="inputs-container">
           <label htmlFor="login">
             <input
+              name="email"
               id="login"
               value={email}
-              onChange={handleEmail}
+              onChange={handleChange}
               required
               placeholder="email"
             />
@@ -57,9 +58,10 @@ function SignIn() {
 
           <label htmlFor="password">
             <input
+              name="password"
               id="password"
               value={password}
-              onChange={handlePassword}
+              onChange={handleChange}
               type="password"
               required
               placeholder="senha"
