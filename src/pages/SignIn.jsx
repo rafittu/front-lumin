@@ -46,13 +46,13 @@ function SignIn() {
 
     const isValid = await validateLogin();
 
-    setIsLoading(false);
-
     if (isValid) {
       navigate('/home');
     } else {
       setError(true);
     }
+
+    setIsLoading(false);
   };
 
   return (
