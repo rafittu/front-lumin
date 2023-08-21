@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 import '../style/SignIn.css';
 
 function SignIn() {
   const navigate = useNavigate();
+  const { setAccessToken } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,8 +25,19 @@ function SignIn() {
   };
 
   const validateLogin = async () => {
-    // axios call to validate login in back-end api
-    // if axios error, return false;
+    try {
+      const response = await axios.post('API_URL', {
+        email,
+        password,
+      });
+
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
+
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -42,7 +56,7 @@ function SignIn() {
   };
 
   return (
-    <div className="signIn">
+    <section className="signIn">
       <form onSubmit={handleSubmit}>
         <div className="inputs-container">
           <label htmlFor="login">
@@ -74,14 +88,16 @@ function SignIn() {
             </div>
           )}
         </div>
+
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
+
       <Link to="/signup">
         <button type="button">Cadastrar</button>
       </Link>
-    </div>
+    </section>
   );
 }
 
