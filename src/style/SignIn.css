@@ -102,3 +102,10 @@ button:hover {
   background-color: rgba(89, 102, 110, 0.795);
   color: white;
 }
+
+.error-msg p {
+  margin: 0;
+  font-size: 15px;
+  text-align: center;
+  color: rgb(126, 2, 2);
+}
