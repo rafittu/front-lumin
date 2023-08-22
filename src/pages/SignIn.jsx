@@ -89,14 +89,16 @@ function SignIn() {
           )}
         </div>
 
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Entrando...' : 'Entrar'}
-        </button>
-      </form>
+        <div className="inputs-buttons">
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Entrando...' : 'Entrar'}
+          </button>
 
-      <Link to="/signup">
-        <button type="button">Cadastrar</button>
-      </Link>
+          <Link to="/signup">
+            <button type="button">Cadastrar</button>
+          </Link>
+        </div>
+      </form>
     </section>
   );
 }
