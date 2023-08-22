@@ -66,7 +66,7 @@ function SignIn() {
               value={email}
               onChange={handleChange}
               required
-              placeholder="email"
+              placeholder="e-mail"
             />
           </label>
 
