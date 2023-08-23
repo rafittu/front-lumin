@@ -109,3 +109,22 @@ button:hover {
   text-align: center;
   color: rgb(126, 2, 2);
 }
+
+@media (max-width: 514px) {
+  .signIn {
+    width: 70%;
+    margin: 20px auto;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .inputs-container label {
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  .inputs-container input {
+    width: 90%;
+  }
+}
