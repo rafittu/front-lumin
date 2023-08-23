@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import SignIn from './pages/SignIn';
+import Home from './pages/Home';
 
 import './style/App.css';
 
@@ -11,6 +12,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route exact path="/" element={<SignIn />} />
+          <Route exact path="/home" element={<Home />} />
         </Routes>
       </AuthProvider>
     </div>
