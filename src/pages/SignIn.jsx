@@ -26,7 +26,7 @@ function SignIn() {
 
   const validateLogin = async () => {
     try {
-      const response = await axios.post('API_URL', {
+      const response = await axios.post('http://localhost:3001/auth/signin', {
         email,
         password,
       });
