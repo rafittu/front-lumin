@@ -104,6 +104,8 @@ button:hover {
 }
 
 .recover-password a {
+  display: inline-block;
+  vertical-align: middle;
   text-decoration: none;
 }
 
