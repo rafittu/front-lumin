@@ -25,10 +25,14 @@ function SignUp() {
     { id: 'username', label: 'Apelido', type: 'text' },
     { id: 'bornDate', label: 'Data de nascimento', type: 'text' },
     { id: 'motherName', label: 'Nome da mãe', type: 'text' },
-    { id: 'email', label: 'Email', type: 'text' },
-    { id: 'phone', label: 'Telefone', type: 'text' },
-    { id: 'password', label: 'Senha', type: 'text' },
-    { id: 'passwordConfirmation', label: 'Confirmação de senha', type: 'text' },
+    { id: 'email', label: 'Email', type: 'email' },
+    { id: 'phone', label: 'Telefone', type: 'tel' },
+    { id: 'password', label: 'Senha', type: 'password' },
+    {
+      id: 'passwordConfirmation',
+      label: 'Confirmação de senha',
+      type: 'password',
+    },
     { id: 'token', label: 'Token de acesso', type: 'text' },
   ];
 

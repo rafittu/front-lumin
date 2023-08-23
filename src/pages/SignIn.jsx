@@ -65,6 +65,7 @@ function SignIn() {
               id="login"
               value={email}
               onChange={handleChange}
+              type="email"
               required
               placeholder="e-mail"
             />
