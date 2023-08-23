@@ -89,6 +89,12 @@ function SignIn() {
           )}
         </div>
 
+        <span className="recover-password">
+          <Link to="/recover-password">
+            <p>esqueci a senha</p>
+          </Link>
+        </span>
+
         <div className="inputs-buttons">
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Entrando...' : 'Entrar'}
