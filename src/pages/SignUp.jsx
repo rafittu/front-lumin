@@ -4,6 +4,7 @@ import InputLabel from '../components/InputLabel';
 import '../style/SignUp.css';
 
 function SignUp() {
+  const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -45,8 +46,64 @@ function SignUp() {
     }));
   };
 
+  const validateForm = () => {
+    const errors = {};
+
+    fields.forEach((field) => {
+      const value = formData[field.id];
+
+      if (!['socialName', 'username', 'phone'].includes(field.id)) {
+        if (!value) {
+          errors[field.id] = 'Este campo é obrigatório';
+        }
+      }
+
+      switch (field.id) {
+        case 'bornDate':
+          if (!/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+            errors[field.id] = 'Data de nascimento inválida (dd/mm/aaaa)';
+          }
+          break;
+        case 'email':
+          if (
+            !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)
+          ) {
+            errors[field.id] = 'Email inválido';
+          }
+          break;
+        case 'password':
+          if (
+            !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(value)
+          ) {
+            errors[field.id] = 'Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número ou um caractere especial';
+          }
+          break;
+        case 'passwordConfirmation':
+          if (value !== formData.password) {
+            errors[field.id] = 'As senhas não coincidem';
+          }
+          break;
+        default:
+          if (!['socialName', 'username', 'phone'].includes(field.id) && !value) {
+            errors[field.id] = 'Este campo é obrigatório';
+          }
+          break;
+      }
+    });
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (validateForm()) {
+      // Submit the form data
+      console.log('Form is valid, submit the data:', formData);
+    } else {
+      console.log('Form has errors, please fix them before submitting');
+    }
   };
 
   return (
@@ -55,6 +112,10 @@ function SignUp() {
         <div className="inputs-container">
           {fields.map((field) => (
             <InputLabel htmlFor={field.id} key={field.id}>
+              {fieldErrors[field.id] && (
+              <span className="error-message">{fieldErrors[field.id]}</span>
+              )}
+
               <input
                 name={field.id}
                 id={field.id}
@@ -62,6 +123,7 @@ function SignUp() {
                 onChange={handleInputChange}
                 type={field.type}
                 placeholder={field.label}
+                className={fieldErrors[field.id] ? 'error' : ''}
               />
             </InputLabel>
           ))}
