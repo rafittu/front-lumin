@@ -18,6 +18,7 @@ function SignUp() {
     passwordConfirmation: '',
     signupToken: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fields = [
     { id: 'firstName', label: 'Primeiro nome', type: 'text' },
@@ -106,6 +107,7 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (validateForm()) {
       // Submit the form data
@@ -113,10 +115,11 @@ function SignUp() {
 
       const formattedBornDate = formatDateToBackend(formData.bornDate);
       formData.bornDate = formattedBornDate;
-      
     } else {
       // console.log('Form has errors, please fix them before submitting');
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -143,7 +146,9 @@ function SignUp() {
         </div>
 
         <div className="inputs-buttons">
-          <button type="submit">Cadastrar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Registrando...' : 'Cadastrar'}
+          </button>
         </div>
       </form>
     </section>
