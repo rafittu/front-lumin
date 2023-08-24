@@ -37,6 +37,16 @@ function SignUp() {
     { id: 'signupToken', label: 'Token de acesso', type: 'text' },
   ];
 
+  const formatDateToBackend = (inputDate) => {
+    const parts = inputDate.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -54,7 +64,7 @@ function SignUp() {
 
       if (!['socialName', 'username', 'phone'].includes(field.id)) {
         if (!value) {
-          errors[field.id] = 'Este campo é obrigatório';
+          errors[field.id] = 'Este campo é obrigatório:';
         }
       }
 
@@ -84,7 +94,7 @@ function SignUp() {
             !['socialName', 'username', 'phone'].includes(field.id)
             && !value
           ) {
-            errors[field.id] = 'Este campo é obrigatório';
+            errors[field.id] = 'Este campo é obrigatório:';
           }
           break;
       }
@@ -99,9 +109,13 @@ function SignUp() {
 
     if (validateForm()) {
       // Submit the form data
-      console.log('Form is valid, submit the data:', formData);
+      // console.log('Form is valid, submit the data:', formData);
+
+      const formattedBornDate = formatDateToBackend(formData.bornDate);
+      formData.bornDate = formattedBornDate;
+      
     } else {
-      console.log('Form has errors, please fix them before submitting');
+      // console.log('Form has errors, please fix them before submitting');
     }
   };
 
