@@ -1,14 +1,14 @@
 .signUp-section {
   background-color: rgb(128, 128, 128, 0.3);
+  color: rgb(1, 8, 14);
+  position: relative;
+  top: 21%;
+  left: 60%;
+  width: 300px;
+  margin-bottom: 210px;
   padding: 20px;
   border-radius: 10px;
-  margin: 50px;
-  width: 300px;
-  position: absolute;
-  top: 40%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  color: rgb(1, 8, 14);
+  transform: translate(-50%, 0);
 }
 
 .error-message {
@@ -26,14 +26,4 @@
 
 .inputs-container input.error {
   border: 2px solid #e74c3c;
-}
-
-@media (max-width: 514px) {
-  .signUp-section {
-    width: 70%;
-    margin: 20px auto;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 }

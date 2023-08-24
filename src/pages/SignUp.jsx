@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import InputLabel from '../components/InputLabel';
+import { useAuth } from '../contexts/AuthContext';
 
 import '../style/SignUp.css';
 
 function SignUp() {
+  const { setAccessToken } = useAuth();
+  const navigate = useNavigate();
+
   const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
@@ -16,8 +22,9 @@ function SignUp() {
     phone: '',
     password: '',
     passwordConfirmation: '',
-    token: '',
+    signupToken: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fields = [
     { id: 'firstName', label: 'Primeiro nome', type: 'text' },
@@ -34,8 +41,18 @@ function SignUp() {
       label: 'Confirmação de senha',
       type: 'password',
     },
-    { id: 'token', label: 'Token de acesso', type: 'text' },
+    { id: 'signupToken', label: 'Token de acesso', type: 'text' },
   ];
+
+  const formatDateToBackend = (inputDate) => {
+    const parts = inputDate.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +71,7 @@ function SignUp() {
 
       if (!['socialName', 'username', 'phone'].includes(field.id)) {
         if (!value) {
-          errors[field.id] = 'Este campo é obrigatório';
+          errors[field.id] = 'Este campo é obrigatório:';
         }
       }
 
@@ -65,16 +82,12 @@ function SignUp() {
           }
           break;
         case 'email':
-          if (
-            !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)
-          ) {
+          if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
             errors[field.id] = 'Email inválido';
           }
           break;
         case 'password':
-          if (
-            !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(value)
-          ) {
+          if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(value)) {
             errors[field.id] = 'Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número ou um caractere especial';
           }
           break;
@@ -84,8 +97,11 @@ function SignUp() {
           }
           break;
         default:
-          if (!['socialName', 'username', 'phone'].includes(field.id) && !value) {
-            errors[field.id] = 'Este campo é obrigatório';
+          if (
+            !['socialName', 'username', 'phone'].includes(field.id)
+            && !value
+          ) {
+            errors[field.id] = 'Este campo é obrigatório:';
           }
           break;
       }
@@ -95,15 +111,42 @@ function SignUp() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const validateSignUp = async () => {
+    const formattedBornDate = formatDateToBackend(formData.bornDate);
+    formData.bornDate = formattedBornDate;
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/users/admin',
+        formData,
+      );
+
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
+
+      return true;
+    } catch (error) {
+      // catch axios error and set fieldError here
+
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      // Submit the form data
-      console.log('Form is valid, submit the data:', formData);
-    } else {
-      console.log('Form has errors, please fix them before submitting');
+    const isValidForm = validateForm();
+
+    if (isValidForm) {
+      setIsLoading(true);
+      const isValidSignUp = await validateSignUp();
+
+      if (isValidSignUp) {
+        navigate('/home');
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -113,7 +156,7 @@ function SignUp() {
           {fields.map((field) => (
             <InputLabel htmlFor={field.id} key={field.id}>
               {fieldErrors[field.id] && (
-              <span className="error-message">{fieldErrors[field.id]}</span>
+                <span className="error-message">{fieldErrors[field.id]}</span>
               )}
 
               <input
@@ -130,7 +173,9 @@ function SignUp() {
         </div>
 
         <div className="inputs-buttons">
-          <button type="submit">Cadastrar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Registrando...' : 'Cadastrar'}
+          </button>
         </div>
       </form>
     </section>
