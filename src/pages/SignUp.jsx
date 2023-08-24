@@ -16,7 +16,7 @@ function SignUp() {
     phone: '',
     password: '',
     passwordConfirmation: '',
-    token: '',
+    signupToken: '',
   });
 
   const fields = [
@@ -34,7 +34,7 @@ function SignUp() {
       label: 'Confirmação de senha',
       type: 'password',
     },
-    { id: 'token', label: 'Token de acesso', type: 'text' },
+    { id: 'signupToken', label: 'Token de acesso', type: 'text' },
   ];
 
   const handleInputChange = (e) => {
@@ -65,16 +65,12 @@ function SignUp() {
           }
           break;
         case 'email':
-          if (
-            !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)
-          ) {
+          if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) {
             errors[field.id] = 'Email inválido';
           }
           break;
         case 'password':
-          if (
-            !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(value)
-          ) {
+          if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(value)) {
             errors[field.id] = 'Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número ou um caractere especial';
           }
           break;
@@ -84,7 +80,10 @@ function SignUp() {
           }
           break;
         default:
-          if (!['socialName', 'username', 'phone'].includes(field.id) && !value) {
+          if (
+            !['socialName', 'username', 'phone'].includes(field.id)
+            && !value
+          ) {
             errors[field.id] = 'Este campo é obrigatório';
           }
           break;
@@ -113,7 +112,7 @@ function SignUp() {
           {fields.map((field) => (
             <InputLabel htmlFor={field.id} key={field.id}>
               {fieldErrors[field.id] && (
-              <span className="error-message">{fieldErrors[field.id]}</span>
+                <span className="error-message">{fieldErrors[field.id]}</span>
               )}
 
               <input
