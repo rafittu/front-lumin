@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import InputLabel from '../components/InputLabel';
+import { useAuth } from '../contexts/AuthContext';
 
 import '../style/SignUp.css';
 
 function SignUp() {
+  const { setAccessToken } = useAuth();
+  const navigate = useNavigate();
+
   const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: '',
@@ -18,6 +24,7 @@ function SignUp() {
     passwordConfirmation: '',
     signupToken: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fields = [
     { id: 'firstName', label: 'Primeiro nome', type: 'text' },
@@ -37,6 +44,16 @@ function SignUp() {
     { id: 'signupToken', label: 'Token de acesso', type: 'text' },
   ];
 
+  const formatDateToBackend = (inputDate) => {
+    const parts = inputDate.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -54,7 +71,7 @@ function SignUp() {
 
       if (!['socialName', 'username', 'phone'].includes(field.id)) {
         if (!value) {
-          errors[field.id] = 'Este campo é obrigatório';
+          errors[field.id] = 'Este campo é obrigatório:';
         }
       }
 
@@ -84,7 +101,7 @@ function SignUp() {
             !['socialName', 'username', 'phone'].includes(field.id)
             && !value
           ) {
-            errors[field.id] = 'Este campo é obrigatório';
+            errors[field.id] = 'Este campo é obrigatório:';
           }
           break;
       }
@@ -94,15 +111,42 @@ function SignUp() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const validateSignUp = async () => {
+    const formattedBornDate = formatDateToBackend(formData.bornDate);
+    formData.bornDate = formattedBornDate;
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/users/admin',
+        formData,
+      );
+
+      const { accessToken } = response.data;
+      setAccessToken(accessToken);
+
+      return true;
+    } catch (error) {
+      // catch axios error and set fieldError here
+
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      // Submit the form data
-      console.log('Form is valid, submit the data:', formData);
-    } else {
-      console.log('Form has errors, please fix them before submitting');
+    const isValidForm = validateForm();
+
+    if (isValidForm) {
+      setIsLoading(true);
+      const isValidSignUp = await validateSignUp();
+
+      if (isValidSignUp) {
+        navigate('/home');
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -129,7 +173,9 @@ function SignUp() {
         </div>
 
         <div className="inputs-buttons">
-          <button type="submit">Cadastrar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Registrando...' : 'Cadastrar'}
+          </button>
         </div>
       </form>
     </section>
