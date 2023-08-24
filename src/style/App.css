@@ -8,10 +8,12 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-.backgroundImage {
+.main-container {
   background-image: url('/public/lani.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 100vh;
+  overflow-y: auto;
+  background-attachment: fixed;
 }

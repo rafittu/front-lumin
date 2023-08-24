@@ -9,7 +9,7 @@ import './style/App.css';
 
 function App() {
   return (
-    <div className="backgroundImage">
+    <div className="main-container">
       <AuthProvider>
         <Routes>
           <Route exact path="/home" element={<Home />} />
