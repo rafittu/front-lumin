@@ -6,6 +6,7 @@ function RecoverPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [tokenRequested, setTokenRequested] = useState(false);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -20,14 +21,15 @@ function RecoverPassword() {
         { email },
       );
 
+      setTokenRequested(true);
       setSuccessMessage(
-        'As instruções para redefinição de senha foram enviadas para o email informado!',
+        'As instruções para redefinir a senha foram enviadas para o email informado!',
       );
     } catch (error) {
       setErrorMessage('Erro ao redefinir a senha.');
+      setEmail('');
     }
 
-    setEmail('');
     setIsLoading(false);
   };
 
@@ -48,7 +50,7 @@ function RecoverPassword() {
           />
         </label>
 
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading || tokenRequested}>
           {isLoading ? 'Enviando email...' : 'Redefinir senha'}
         </button>
         {successMessage && <div>{successMessage}</div>}
