@@ -82,12 +82,6 @@ function SignIn() {
               placeholder="senha"
             />
           </label>
-
-          {error && (
-            <div className="error-msg">
-              <p>E-mail ou senha inválido</p>
-            </div>
-          )}
         </div>
 
         <span className="recover-password">
@@ -95,6 +89,12 @@ function SignIn() {
             <p>esqueci a senha</p>
           </Link>
         </span>
+
+        {error && (
+        <div className="error-msg">
+          <p>E-mail ou senha inválido</p>
+        </div>
+        )}
 
         <div className="inputs-buttons">
           <button type="submit" disabled={isLoading}>
