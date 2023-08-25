@@ -7,8 +7,8 @@ import { useAuth } from '../contexts/AuthContext';
 import '../style/SignUp.css';
 
 function SignUp() {
-  const { setAccessToken } = useAuth();
   const navigate = useNavigate();
+  const { setAccessToken } = useAuth();
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -25,6 +25,7 @@ function SignUp() {
     signupToken: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [apiErrorMessage, setApiErrorMessage] = useState('');
 
   const fields = [
     { id: 'firstName', label: 'Primeiro nome', type: 'text' },
@@ -103,6 +104,8 @@ function SignUp() {
           ) {
             errors[field.id] = 'Este campo é obrigatório:';
           }
+
+          setApiErrorMessage('');
           break;
       }
     });
@@ -111,14 +114,43 @@ function SignUp() {
     return Object.keys(errors).length === 0;
   };
 
+  const handleApiError = (errorMessage) => {
+    switch (errorMessage) {
+      case 'email already in use':
+        setFieldErrors((prevErrors) => ({
+          ...prevErrors,
+          email: 'Este email já está em uso',
+        }));
+        break;
+      case 'missing or invalid signup token':
+        setFieldErrors((prevErrors) => ({
+          ...prevErrors,
+          signupToken: 'Token inválido',
+        }));
+        break;
+      case 'invalid ip address':
+        setFieldErrors((prevErrors) => ({
+          ...prevErrors,
+          signupToken: 'Algo deu errado =(',
+        }));
+        break;
+      default:
+        setApiErrorMessage('Erro de servidor');
+        break;
+    }
+  };
+
   const validateSignUp = async () => {
     const formattedBornDate = formatDateToBackend(formData.bornDate);
-    formData.bornDate = formattedBornDate;
+    const signUpBody = {
+      ...formData,
+      bornDate: formattedBornDate,
+    };
 
     try {
       const response = await axios.post(
         'http://localhost:3001/users/admin',
-        formData,
+        signUpBody,
       );
 
       const { accessToken } = response.data;
@@ -126,7 +158,8 @@ function SignUp() {
 
       return true;
     } catch (error) {
-      // catch axios error and set fieldError here
+      const errorMessage = error?.response?.data?.error?.message;
+      handleApiError(errorMessage);
 
       return false;
     }
@@ -171,6 +204,10 @@ function SignUp() {
             </InputLabel>
           ))}
         </div>
+
+        {apiErrorMessage && (
+          <div className="error-message">{apiErrorMessage}</div>
+        )}
 
         <div className="inputs-buttons">
           <button type="submit" disabled={isLoading}>

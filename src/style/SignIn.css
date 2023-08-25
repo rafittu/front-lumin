@@ -111,7 +111,7 @@ button:hover {
 
 .recover-password p {
   margin-top: -7px;
-  margin-bottom: 15px;
+  margin-bottom: 11px;
   margin-left: 7px;
   font-size: 15px;
   text-align: left;
@@ -126,6 +126,7 @@ button:hover {
 
 .error-msg p {
   margin: 0;
+  margin-bottom: 9px;
   font-size: 15px;
   text-align: center;
   color: rgb(126, 2, 2);
