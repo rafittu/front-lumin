@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import '../style/RecoverPassword.css';
+
 function RecoverPassword() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +25,7 @@ function RecoverPassword() {
 
       setTokenRequested(true);
       setSuccessMessage(
-        'As instruções para redefinir a senha foram enviadas para o email informado!',
+        'As instruções para redefinir a senha foram enviadas ao email informado!',
       );
     } catch (error) {
       setErrorMessage('Erro ao redefinir a senha.');
@@ -34,29 +36,44 @@ function RecoverPassword() {
   };
 
   return (
-    <div>
+    <section className="recover-password-box">
       <h1>Recuperação de Senha</h1>
 
       <form onSubmit={handleEmailSubmit}>
-        <label htmlFor="email">
-          <input
-            name="email"
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="e-mail"
-          />
-        </label>
+        <div className="inputs-container">
+          <label htmlFor="email">
+            <input
+              name="email"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="e-mail"
+            />
+          </label>
+        </div>
 
-        <button type="submit" disabled={isLoading || tokenRequested}>
-          {isLoading ? 'Enviando email...' : 'Redefinir senha'}
-        </button>
-        {successMessage && <div>{successMessage}</div>}
-        {errorMessage && <div>{errorMessage}</div>}
+        {successMessage && (
+          <div className="success-msg">
+            <p>{successMessage}</p>
+          </div>
+        )}
+        {errorMessage && (
+          <div className="error-msg">
+            <p>{errorMessage}</p>
+          </div>
+        )}
+
+        {!tokenRequested && (
+          <div className="inputs-buttons">
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? 'Enviando email...' : 'Redefinir senha'}
+            </button>
+          </div>
+        )}
       </form>
-    </div>
+    </section>
   );
 }
 
