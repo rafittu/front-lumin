@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import InputLabel from '../components/InputLabel';
 
+import '../style/ResetPassword.css';
+
 function ResetPassword() {
   const navigate = useNavigate();
   const { token } = useParams();
@@ -15,10 +17,10 @@ function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
 
   const inputFields = [
-    { name: 'password', label: 'Senha', type: 'password' },
+    { name: 'password', label: 'Nova senha', type: 'password' },
     {
       name: 'passwordConfirmation',
-      label: 'Confirmação de senha',
+      label: 'Confirmação da senha',
       type: 'password',
     },
   ];
@@ -33,11 +35,9 @@ function ResetPassword() {
   };
 
   const validatePassword = () => {
-    if (
-      !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(
-        newPassword.password,
-      )
-    ) {
+    const passwordRegex = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/;
+
+    if (!passwordRegex.test(newPassword.password)) {
       setErrorMessage(
         'Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número ou um caractere especial',
       );
@@ -86,30 +86,56 @@ function ResetPassword() {
   };
 
   return (
-    <form onSubmit={handlePasswordSubmit}>
-      <div className="inputs-container">
-        {inputFields.map((field) => (
-          <InputLabel htmlFor={field.name} key={field.name}>
-            <input
-              name={field.name}
-              id={field.name}
-              value={newPassword[field.name]}
-              onChange={handleInputChange}
-              type={field.type}
-              placeholder={field.label}
-            />
-          </InputLabel>
-        ))}
-      </div>
+    <section className="reset-password-box">
+      <form onSubmit={handlePasswordSubmit}>
+        <div className="password-format-indicators">
+          <span
+            className={/[A-Z]/.test(newPassword.password) ? 'valid' : 'invalid'}
+          >
+            A
+          </span>
+          <span
+            className={/[a-z]/.test(newPassword.password) ? 'valid' : 'invalid'}
+          >
+            a
+          </span>
+          <span
+            className={/[0-9]/.test(newPassword.password) ? 'valid' : 'invalid'}
+          >
+            0-9
+          </span>
+          <span
+            className={/\W/.test(newPassword.password) ? 'valid' : 'invalid'}
+          >
+            @
+          </span>
+        </div>
 
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+        <div className="inputs-container">
+          {inputFields.map((field) => (
+            <InputLabel htmlFor={field.name} key={field.name}>
+              <input
+                name={field.name}
+                id={field.name}
+                value={newPassword[field.name]}
+                onChange={handleInputChange}
+                type={field.type}
+                placeholder={field.label}
+                className={errorMessage ? 'error' : ''}
+              />
+            </InputLabel>
+          ))}
+        </div>
 
-      <div className="inputs-buttons">
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Enviando...' : 'Redefinir Senha'}
-        </button>
-      </div>
-    </form>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+        <div className="inputs-buttons">
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Enviando...' : 'Redefinir Senha'}
+          </button>
+        </div>
+      </form>
+    </section>
   );
 }
 
