@@ -28,3 +28,18 @@ nav a:hover {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
+nav a.disabled {
+  pointer-events: none;
+  color: #919086;
+}
+
+nav a.disabled:hover {
+  background-color: transparent;
+}
+
+nav .disabled-message {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 5px;
+}
