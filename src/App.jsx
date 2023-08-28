@@ -8,23 +8,30 @@ import ResetPassword from './pages/ResetPassword';
 import Home from './pages/Home';
 
 import './style/App.css';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
     <div className="main-container">
       <AuthProvider>
-        <Routes>
-          <Route exact path="/home" element={<Home />} />
-          <Route
-            exact
-            path="/recover-password/:token"
-            element={<ResetPassword />}
-          />
-          <Route exact path="/recover-password" element={<RecoverPassword />} />
-          <Route exact path="/signin" element={<SignIn />} />
-          <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/" element={<SignIn />} />
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route exact path="/home" element={<Home />} />
+            <Route
+              exact
+              path="/recover-password/:token"
+              element={<ResetPassword />}
+            />
+            <Route
+              exact
+              path="/recover-password"
+              element={<RecoverPassword />}
+            />
+            <Route exact path="/signin" element={<SignIn />} />
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/" element={<SignIn />} />
+          </Routes>
+        </UserProvider>
       </AuthProvider>
     </div>
   );
