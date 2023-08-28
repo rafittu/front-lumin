@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import InputLabel from '../components/InputLabel';
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const { token } = useParams();
 
   const [newPassword, setNewPassword] = useState({
@@ -10,7 +12,7 @@ function ResetPassword() {
     passwordConfirmation: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputFields = [
     { name: 'password', label: 'Senha', type: 'password' },
@@ -51,16 +53,36 @@ function ResetPassword() {
     return true;
   };
 
+  const resetPassword = async () => {
+    try {
+      await axios.patch(
+        `http://localhost:3000/auth/reset-password/${token}`,
+        newPassword,
+      );
+
+      return true;
+    } catch (error) {
+      setErrorMessage('Token inválido ou expirado.');
+      return false;
+    }
+  };
+
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
     const isValidPassword = validatePassword();
 
     if (isValidPassword) {
-      console.log(token);
-      console.log(newPassword);
-      console.log('chama axios');
+      setIsLoading(true);
+
+      const isPasswordReset = await resetPassword();
+
+      if (isPasswordReset) {
+        navigate('/signin');
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -83,7 +105,9 @@ function ResetPassword() {
       {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       <div className="inputs-buttons">
-        <button type="submit">Redefinir senha</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Enviando...' : 'Redefinir Senha'}
+        </button>
       </div>
     </form>
   );
