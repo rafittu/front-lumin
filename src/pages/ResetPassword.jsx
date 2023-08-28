@@ -9,6 +9,8 @@ function ResetPassword() {
     password: '',
     passwordConfirmation: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
+  //   const [isLoading, setIsLoading] = useState(false);
 
   const inputFields = [
     { name: 'password', label: 'Senha', type: 'password' },
@@ -28,11 +30,37 @@ function ResetPassword() {
     }));
   };
 
+  const validatePassword = () => {
+    if (
+      !/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\W).{7,}/.test(
+        newPassword.password,
+      )
+    ) {
+      setErrorMessage(
+        'Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número ou um caractere especial',
+      );
+      return false;
+    }
+
+    if (newPassword.password !== newPassword.passwordConfirmation) {
+      setErrorMessage('As senhas não coincidem');
+      return false;
+    }
+
+    setErrorMessage('');
+    return true;
+  };
+
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(token);
-    console.log(newPassword);
+    const isValidPassword = validatePassword();
+
+    if (isValidPassword) {
+      console.log(token);
+      console.log(newPassword);
+      console.log('chama axios');
+    }
   };
 
   return (
@@ -52,8 +80,10 @@ function ResetPassword() {
         ))}
       </div>
 
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       <div className="inputs-buttons">
-        <button type="submit">Criar nova senha</button>
+        <button type="submit">Redefinir senha</button>
       </div>
     </form>
   );
