@@ -12,3 +12,19 @@ nav {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+nav a:hover {
+  background-color: #ddd;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
