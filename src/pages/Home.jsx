@@ -75,7 +75,7 @@ function Home() {
       <div className="content-container">
         {userData.status !== 'ACTIVE' && (
           <div id="confim-account-box">
-            <p>
+            <p id="message-box">
               Sua conta ainda não foi confirmada. Enviamos um email para
               {' '}
               <strong>{userData.email}</strong>
