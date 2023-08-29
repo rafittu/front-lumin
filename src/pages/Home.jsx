@@ -4,9 +4,11 @@ import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 
+import '../style/Home.css';
+
 function Home() {
   const { accessToken } = useAuth();
-  const { setUserData } = useUser();
+  const { userData, setUserData } = useUser();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -18,6 +20,7 @@ function Home() {
         });
 
         setUserData(response.data);
+        console.log(userData);
       } catch (error) {
         console.error('Erro ao buscar dados do usuário:', error);
       }
@@ -30,8 +33,18 @@ function Home() {
     <section>
       <Navbar />
 
-      <div>
-        <p>Content</p>
+      <div className="content-container">
+        {userData.status !== 'ACTIVE' && (
+          <div id="confim-account-box">
+            <p>
+              Sua conta ainda não foi confirmada. Enviamos um email para
+              {' '}
+              <strong>{userData.email}</strong>
+              , basta clicar no link de
+              confirmação para obter acesso total na plataforma!
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
