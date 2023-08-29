@@ -33,14 +33,19 @@ function Home() {
         },
       );
 
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        email,
+      }));
+
       setSuccessMessage(
         `Email para confirmação de conta enviado para ${email}`,
       );
     } catch (error) {
       setErrorMessage('Erro ao enviar novo email para confirmação de conta');
-      setEmail('');
     }
 
+    setEmail('');
     setIsLoading(false);
   };
 
