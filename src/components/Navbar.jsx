@@ -11,7 +11,7 @@ function Navbar() {
     <nav>
       <Link to="/home">Inicio</Link>
       <Link
-        to="/schedule"
+        to="/schedules"
         className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
       >
         Agenda

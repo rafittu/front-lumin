@@ -5,16 +5,18 @@ import SignIn from './pages/SignIn';
 import RecoverPassword from './pages/RecoverPassword';
 import ResetPassword from './pages/ResetPassword';
 import Home from './pages/Home';
-
-import './style/App.css';
 import { UserProvider } from './contexts/UserContext';
 import ConfirmAccount from './pages/ConfirmAccount';
+import Schedules from './pages/Schedules';
+
+import './style/App.css';
 
 function App() {
   return (
     <div className="main-container">
       <UserProvider>
         <Routes>
+          <Route exact path="/schedules" element={<Schedules />} />
           <Route exact path="/home" element={<Home />} />
           <Route
             exact
