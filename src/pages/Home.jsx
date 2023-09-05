@@ -43,6 +43,12 @@ function Home() {
       );
     } catch (error) {
       setErrorMessage('Erro ao enviar novo email para confirmação de conta');
+
+      const axiosErrorMessage = error.response.data.error.message;
+
+      if (axiosErrorMessage === 'The new email provided is already in use') {
+        setErrorMessage(`O email informado (${email}) já está em uso.`);
+      }
     }
 
     setEmail('');
@@ -99,15 +105,15 @@ function Home() {
               </div>
 
               {successMessage && (
-              <div className="success-msg">
-                <p>{successMessage}</p>
-              </div>
+                <div className="success-msg">
+                  <p>{successMessage}</p>
+                </div>
               )}
 
               {errorMessage && (
-              <div className="error-msg">
-                <p>{errorMessage}</p>
-              </div>
+                <div className="error-msg">
+                  <p>{errorMessage}</p>
+                </div>
               )}
 
               <div className="inputs-buttons">
@@ -115,7 +121,6 @@ function Home() {
                   {isLoading ? 'Enviando email...' : 'Enviar novo email'}
                 </button>
               </div>
-
             </form>
           </div>
         )}
