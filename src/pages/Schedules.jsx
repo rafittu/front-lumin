@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import Navbar from '../components/Navbar';
+import AppointmentCalendar from '../components/AppointmentCalendar';
 
 import '../style/Schedules.css';
 
