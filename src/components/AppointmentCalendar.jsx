@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom';
 
 function AppointmentCalendar({ appointments }) {
   const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(date).toLocaleDateString(undefined, options);
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+
+    return new Date(date).toLocaleDateString('pt-BR', options);
   };
 
   return (

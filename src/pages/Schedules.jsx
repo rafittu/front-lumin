@@ -36,7 +36,7 @@ function Schedules() {
     <section>
       <Navbar />
 
-      <div className="content-container">
+      <div id="schedule-container">
         <h1>Agenda de Compromissos</h1>
         <AppointmentCalendar appointments={appointments} />
       </div>
