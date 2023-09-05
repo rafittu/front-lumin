@@ -50,7 +50,7 @@ function Home() {
         {!showConfirmAccountBox && userData.status === 'ACTIVE' && (
           <div className="quote">
             <h1>Bem Vind!</h1>
-            <h3>As pessoas são do tamanho dos seus sonhos (Fernando Pessoa)</h3>
+            <p>As pessoas são do tamanho dos seus sonhos (Fernando Pessoa)</p>
           </div>
         )}
       </div>
