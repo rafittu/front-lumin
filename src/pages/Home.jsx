@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
@@ -11,6 +11,7 @@ function Home() {
   const navigate = useNavigate();
 
   const { userData, setUserData } = useUser();
+  const [showConfirmAccountBox, setShowConfirmAccountBox] = useState(false);
   const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -23,6 +24,8 @@ function Home() {
         });
 
         setUserData(response.data);
+
+        setShowConfirmAccountBox(response.data.status !== 'ACTIVE');
       } catch (error) {
         navigate('/signin');
       }
@@ -36,12 +39,16 @@ function Home() {
       <Navbar />
 
       <div className="content-container">
-        {userData.status !== 'ACTIVE' && (
-        <ConfirmAccountBox
-          accessToken={accessToken}
-          userData={userData}
-          setUserData={setUserData}
-        />
+        {showConfirmAccountBox && (
+          <ConfirmAccountBox
+            accessToken={accessToken}
+            userData={userData}
+            setUserData={setUserData}
+          />
+        )}
+
+        {!showConfirmAccountBox && userData.status === 'ACTIVE' && (
+          <h1>CONTENT</h1>
         )}
       </div>
     </section>
