@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext';
 
 import '../style/SignIn.css';
 
 function SignIn() {
   const navigate = useNavigate();
-  const { setAccessToken } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +30,7 @@ function SignIn() {
       });
 
       const { accessToken } = response.data;
-      setAccessToken(accessToken);
+      localStorage.setItem('accessToken', accessToken);
 
       return true;
     } catch (err) {
