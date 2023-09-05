@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,6 +8,7 @@ import Navbar from '../components/Navbar';
 import '../style/Home.css';
 
 function Home() {
+  const navigate = useNavigate();
   const { accessToken } = useAuth();
   const { userData, setUserData } = useUser();
 
@@ -65,9 +67,8 @@ function Home() {
         });
 
         setUserData(response.data);
-        console.log(userData);
       } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
+        navigate('/signin');
       }
     };
 
