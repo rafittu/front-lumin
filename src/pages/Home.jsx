@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
-import { useAuth } from '../contexts/AuthContext';
 import Navbar from '../components/Navbar';
 
 import '../style/Home.css';
@@ -10,8 +9,9 @@ import ConfirmAccountBox from '../components/ConfirmAccountBox';
 
 function Home() {
   const navigate = useNavigate();
-  const { accessToken } = useAuth();
+
   const { userData, setUserData } = useUser();
+  const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
     const fetchUserData = async () => {

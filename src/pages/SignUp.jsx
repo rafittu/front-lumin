@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InputLabel from '../components/InputLabel';
-import { useAuth } from '../contexts/AuthContext';
 
 import '../style/SignUp.css';
 
 function SignUp() {
   const navigate = useNavigate();
-  const { setAccessToken } = useAuth();
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -154,7 +152,7 @@ function SignUp() {
       );
 
       const { accessToken } = response.data;
-      setAccessToken(accessToken);
+      localStorage.setItem('accessToken', accessToken);
 
       return true;
     } catch (error) {
