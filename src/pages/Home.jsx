@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import Navbar from '../components/Navbar';
+import ConfirmAccountBox from '../components/ConfirmAccountBox';
 
 import '../style/Home.css';
-import ConfirmAccountBox from '../components/ConfirmAccountBox';
 
 function Home() {
   const navigate = useNavigate();
@@ -48,7 +48,10 @@ function Home() {
         )}
 
         {!showConfirmAccountBox && userData.status === 'ACTIVE' && (
-          <h1>CONTENT</h1>
+          <div className="quote">
+            <h1>Bem Vind!</h1>
+            <h3>As pessoas são do tamanho dos seus sonhos (Fernando Pessoa)</h3>
+          </div>
         )}
       </div>
     </section>
