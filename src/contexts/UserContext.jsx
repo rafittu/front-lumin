@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState({});
 
   const userContext = useMemo(
     () => ({
