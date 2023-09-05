@@ -8,6 +8,7 @@ import Home from './pages/Home';
 
 import './style/App.css';
 import { UserProvider } from './contexts/UserContext';
+import ConfirmAccount from './pages/ConfirmAccount';
 
 function App() {
   return (
@@ -17,14 +18,15 @@ function App() {
           <Route exact path="/home" element={<Home />} />
           <Route
             exact
-            path="/recover-password/:token"
-            element={<ResetPassword />}
+            path="/email-confirmation/:token"
+            element={<ConfirmAccount />}
           />
           <Route
             exact
-            path="/recover-password"
-            element={<RecoverPassword />}
+            path="/recover-password/:token"
+            element={<ResetPassword />}
           />
+          <Route exact path="/recover-password" element={<RecoverPassword />} />
           <Route exact path="/signin" element={<SignIn />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/" element={<SignIn />} />
