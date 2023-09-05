@@ -28,6 +28,12 @@ function Navbar() {
       >
         Fichas
       </Link>
+      <Link
+        to="/payments"
+        className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
+      >
+        Financeiro
+      </Link>
     </nav>
   );
 }
