@@ -44,11 +44,13 @@ function Schedules() {
 
         {showForm ? <AppointmentForm /> : null}
 
-        {!showForm ? (
-          <button type="button" onClick={() => setShowForm(true)}>
-            Criar Novo Compromisso
-          </button>
-        ) : null}
+        <div className="inputs-buttons">
+          {!showForm ? (
+            <button type="button" onClick={() => setShowForm(true)}>
+              Criar Novo Compromisso
+            </button>
+          ) : null}
+        </div>
       </div>
     </section>
   );

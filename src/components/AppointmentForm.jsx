@@ -14,10 +14,30 @@ function AppointmentForm() {
   });
 
   const fields = [
-    { id: 'clientName', label: 'Nome do cliente', type: 'text' },
-    { id: 'clientPhone', label: 'Telefone para contato', type: 'text' },
-    { id: 'appointmentDate', label: 'Data do agendamento', type: 'date' },
-    { id: 'appointmentTime', label: 'Horário do agendamento', type: 'text' },
+    {
+      id: 'clientName',
+      label: 'NOME:',
+      placeholder: 'Nome do cliente',
+      type: 'text',
+    },
+    {
+      id: 'clientPhone',
+      label: 'TELEFONE:',
+      placeholder: 'Telefone para contato',
+      type: 'text',
+    },
+    {
+      id: 'appointmentDate',
+      label: 'DATA:',
+      placeholder: 'Data do agendamento',
+      type: 'date',
+    },
+    {
+      id: 'appointmentTime',
+      label: 'HORÁRIO:',
+      placeholder: 'hh:mm',
+      type: 'text',
+    },
   ];
 
   const handleInputChange = (e) => {
@@ -42,24 +62,28 @@ function AppointmentForm() {
 
   return (
     <div className="appointment-form">
-      <h2>Criar Novo Compromisso</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-container">
           {fields.map((field) => (
             <InputLabel htmlFor={field.id} key={field.id}>
+              <span>{field.label}</span>
+
               <input
                 name={field.id}
                 id={field.id}
                 value={formData[field.id]}
                 onChange={handleInputChange}
                 type={field.type}
-                placeholder={field.label}
+                placeholder={field.placeholder}
                 className="form-group"
               />
             </InputLabel>
           ))}
         </div>
-        <button type="submit">Criar Compromisso</button>
+
+        <div className="inputs-buttons">
+          <button type="submit">CRIAR AGENDAMENTO</button>
+        </div>
       </form>
     </div>
   );
