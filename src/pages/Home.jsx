@@ -25,6 +25,13 @@ function Home() {
 
         setUserData(response.data);
 
+        const { id, status } = response.data;
+        const userDataStorage = {
+          id,
+          status,
+        };
+        localStorage.setItem('userData', JSON.stringify(userDataStorage));
+
         setShowConfirmAccountBox(response.data.status !== 'ACTIVE');
       } catch (error) {
         navigate('/signin');

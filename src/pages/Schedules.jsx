@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUser } from '../contexts/UserContext';
 import Navbar from '../components/Navbar';
 import AppointmentCalendar from '../components/AppointmentCalendar';
 
 import '../style/Schedules.css';
 
 function Schedules() {
-  const { userData } = useUser();
   const [appointments, setAppointments] = useState([]);
   const accessToken = localStorage.getItem('accessToken');
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   useEffect(() => {
     const fetchAppointmentsData = async () => {
@@ -25,7 +24,7 @@ function Schedules() {
 
         setAppointments(response.data.appointments);
       } catch (error) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       }
     };
 
