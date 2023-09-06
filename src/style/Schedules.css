@@ -1,0 +1,53 @@
+#schedule-container {
+  position: fixed;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(245, 247, 241, 0.808);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  min-height: 81%;
+  width: 81%;
+  margin-left: 81px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#schedule-container h1 {
+  color: #7c795d;
+  font-family: 'Trocchi', serif;
+  font-size: 37px;
+  font-weight: normal;
+  line-height: 48px;
+  margin-bottom: 27px;
+  margin-top: -370px;
+}
+
+.appointment-calendar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-date {
+  background-color: #67c5f0b4;
+  border-radius: 8px;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
