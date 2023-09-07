@@ -5,6 +5,9 @@ import InputLabel from './InputLabel';
 
 function AppointmentForm() {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const currentDateTime = new Date();
 
   const [formData, setFormData] = useState({
     clientName: '',
@@ -12,6 +15,7 @@ function AppointmentForm() {
     appointmentDate: '',
     appointmentTime: '',
   });
+  const [errors, setErrors] = useState();
 
   const fields = [
     {
@@ -48,13 +52,42 @@ function AppointmentForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const minimumDateTime = new Date(
+      currentDateTime.getTime() + 60 * 60 * 1000,
+    );
+    const userDateTime = new Date(
+      `${formData.appointmentDate}T${formData.appointmentTime}`,
+    );
+
+    if (
+      !formData.appointmentDate
+      || !formData.appointmentTime
+      || userDateTime < minimumDateTime
+    ) {
+      setErrors('Data ou hora inválida.');
+      setFormData((prevForm) => ({
+        ...prevForm,
+        appointmentDate: '',
+        appointmentTime: '',
+      }));
+      return;
+    }
+
     try {
       const response = await axios.post(
-        'http://localhost:3001/appointments',
+        'http://localhost:3001/schedules/create',
         formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            professionalId: userData.id,
+          },
+        },
       );
 
-      navigate(`/schedules/${response.data.id}`);
+      navigate(`/appointment/${response.data.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -80,6 +113,8 @@ function AppointmentForm() {
             </InputLabel>
           ))}
         </div>
+
+        {errors && <span className="error-message">{errors}</span>}
 
         <div className="inputs-buttons">
           <button type="submit">CRIAR AGENDAMENTO</button>
