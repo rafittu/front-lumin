@@ -25,6 +25,13 @@ function Home() {
 
         setUserData(response.data);
 
+        const { id, status } = response.data;
+        const userDataStorage = {
+          id,
+          status,
+        };
+        localStorage.setItem('userData', JSON.stringify(userDataStorage));
+
         setShowConfirmAccountBox(response.data.status !== 'ACTIVE');
       } catch (error) {
         navigate('/signin');
@@ -50,7 +57,7 @@ function Home() {
         {!showConfirmAccountBox && userData.status === 'ACTIVE' && (
           <div className="quote">
             <h1>Bem Vind!</h1>
-            <h3>As pessoas são do tamanho dos seus sonhos (Fernando Pessoa)</h3>
+            <p>As pessoas são do tamanho dos seus sonhos (Fernando Pessoa)</p>
           </div>
         )}
       </div>

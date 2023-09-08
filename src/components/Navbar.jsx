@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useUser } from '../contexts/UserContext';
 
 import '../style/Navbar.css';
 
 function Navbar() {
-  const { userData } = useUser();
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   return (
     <nav>
       <Link to="/home">Inicio</Link>
       <Link
-        to="/schedule"
+        to="/schedules"
         className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
       >
         Agenda

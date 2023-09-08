@@ -1,0 +1,104 @@
+#schedule-container {
+  position: fixed;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(245, 247, 241, 0.808);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  min-height: 81%;
+  width: 81%;
+  margin-left: 81px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+#schedule-container h1 {
+  color: #7c795d;
+  font-family: 'Trocchi', serif;
+  font-size: 37px;
+  font-weight: normal;
+  line-height: 48px;
+  margin-top: 9px;
+  padding: 27px;
+}
+
+.appointment-calendar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 20px;
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-date {
+  background-color: #67c5f0b4;
+  border-radius: 8px;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+.appointment-form {
+  background-color: rgba(128, 128, 128, 0.205);
+  color: rgb(1, 8, 14);
+  position: relative;
+  width: 80%;
+  margin-top: 11px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appointment-form label {
+  color: #24292e;
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  margin-left: 27px;
+}
+
+.appointment-form span {
+  margin-right: 25px;
+  min-width: 90px;
+}
+
+.appointment-form input {
+  padding: 7px;
+  border-radius: 7px;
+  border: none;
+  box-shadow: inset 0 1px 3px #000;
+  outline: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  min-width: 250px;
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 27px;
+}
+
+#appt-error {
+    text-align: center;
+    padding: 0px 0px 18px 18px;
+}
