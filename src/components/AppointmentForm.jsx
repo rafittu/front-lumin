@@ -49,9 +49,7 @@ function AppointmentForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const validateDateTime = () => {
     const minimumDateTime = new Date(
       currentDateTime.getTime() + 60 * 60 * 1000,
     );
@@ -70,8 +68,16 @@ function AppointmentForm() {
         appointmentDate: '',
         appointmentTime: '',
       }));
-      return;
+      return true;
     }
+    return false;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const isValidForm = validateDateTime();
+    if (isValidForm) return;
 
     try {
       const response = await axios.post(
@@ -89,7 +95,10 @@ function AppointmentForm() {
 
       navigate(`/appointment/${response.data.id}`);
     } catch (error) {
-      console.error(error);
+      const axiosError = error.response.data.error.message;
+      if (axiosError === 'an appointment already exists at this time') {
+        setErrors('Você já possui um agendamento para esse horário.');
+      }
     }
   };
 
@@ -114,7 +123,7 @@ function AppointmentForm() {
           ))}
         </div>
 
-        {errors && <span className="error-message">{errors}</span>}
+        {errors && <span id="appt-error" className="error-message">{errors}</span>}
 
         <div className="inputs-buttons">
           <button type="submit">CRIAR AGENDAMENTO</button>
