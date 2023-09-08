@@ -29,7 +29,7 @@ function AppointmentCalendar({ appointments }) {
       {Object.keys(groupedAppointments).map((date) => (
         <Link
           key={date}
-          to={`/daily-appointments/${date}`} // Rota para compromissos diários
+          to={`/daily-appointments/${date}`}
           className="calendar-date"
         >
           {formatDate(date)}
