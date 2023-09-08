@@ -97,3 +97,8 @@
   justify-content: space-around;
   margin-bottom: 27px;
 }
+
+#appt-error {
+    text-align: center;
+    padding: 0px 0px 18px 18px;
+}
