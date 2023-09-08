@@ -25,7 +25,13 @@ function Schedules() {
           },
         );
 
-        setAppointments(response.data.appointments);
+        const sortedAppointments = response.data.appointments.sort((a, b) => {
+          const dateA = new Date(a.appointmentDate);
+          const dateB = new Date(b.appointmentDate);
+          return dateA - dateB;
+        });
+
+        setAppointments(sortedAppointments);
       } catch (error) {
         console.log(error.response.data);
       }
