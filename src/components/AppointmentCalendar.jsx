@@ -13,15 +13,26 @@ function AppointmentCalendar({ appointments }) {
     return new Date(date).toLocaleDateString('pt-BR', options);
   };
 
+  const groupedAppointments = {};
+  appointments.forEach((appointment) => {
+    const date = appointment.appointmentDate;
+
+    if (!groupedAppointments[date]) {
+      groupedAppointments[date] = [];
+    }
+
+    groupedAppointments[date].push(appointment);
+  });
+
   return (
     <div className="appointment-calendar">
-      {appointments.map((appointment) => (
+      {Object.keys(groupedAppointments).map((date) => (
         <Link
-          key={appointment.id}
-          to={`/appointment/${appointment.id}`}
+          key={date}
+          to={`/daily-appointments/${date}`} // Rota para compromissos diários
           className="calendar-date"
         >
-          {formatDate(appointment.appointmentDate)}
+          {formatDate(date)}
         </Link>
       ))}
     </div>
