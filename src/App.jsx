@@ -10,12 +10,18 @@ import ConfirmAccount from './pages/ConfirmAccount';
 import Schedules from './pages/Schedules';
 
 import './style/App.css';
+import AppointmentDetails from './pages/Appointment';
 
 function App() {
   return (
     <div className="main-container">
       <UserProvider>
         <Routes>
+          <Route
+            exact
+            path="/appointment/:id"
+            element={<AppointmentDetails />}
+          />
           <Route exact path="/schedules" element={<Schedules />} />
           <Route exact path="/home" element={<Home />} />
           <Route
