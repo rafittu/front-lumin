@@ -8,6 +8,7 @@ function AppointmentCalendar({ appointments }) {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'UTC',
     };
 
     return new Date(date).toLocaleDateString('pt-BR', options);
