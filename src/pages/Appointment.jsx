@@ -35,6 +35,10 @@ function AppointmentDetails() {
     fetchAppointmentDetails();
   }, [id]);
 
+  if (!appointment) {
+    return <div>Carregando detalhes do compromisso...</div>;
+  }
+
   return (
     <section>
       <Navbar />
