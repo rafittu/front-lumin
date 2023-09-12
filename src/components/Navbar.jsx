@@ -8,7 +8,6 @@ function Navbar() {
 
   return (
     <nav>
-      <Link to="/home">Inicio</Link>
       <Link
         to="/schedules"
         className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
