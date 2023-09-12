@@ -15,3 +15,22 @@
   font-size: 18px;
   line-height: 1.5;
 }
+
+.detail-label {
+  color: #24292e;
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  margin-left: 27px;
+}
+
+.detail-value {
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 18px;
+  font-weight: 350;
+  line-height: 21px;
+  margin-left: 21px;
+}
