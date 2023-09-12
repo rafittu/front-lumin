@@ -47,6 +47,11 @@ function AppointmentDetails() {
     navigate('/schedules');
   };
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <section>
       <Navbar />
@@ -60,7 +65,9 @@ function AppointmentDetails() {
           </p>
           <p className="detail-label">
             Data:
-            <span className="detail-value">{appointment.appointmentDate}</span>
+            <span className="detail-value">
+              {formatDate(appointment.appointmentDate)}
+            </span>
           </p>
           <p className="detail-label">
             Hora:
