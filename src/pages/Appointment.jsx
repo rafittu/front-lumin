@@ -46,27 +46,23 @@ function AppointmentDetails() {
       <Navbar />
 
       <div id="schedule-container">
-        <h1>Detalhes do agendamento:</h1>
+        <h1>Detalhes do agendamento</h1>
         <div id="appointment-details">
-          <p>
+          <p className="detail-label">
             Cliente:
-            {' '}
-            {appointment.clientName}
+            <span className="detail-value">{appointment.clientName}</span>
           </p>
-          <p>
+          <p className="detail-label">
             Data:
-            {' '}
-            {appointment.appointmentDate}
+            <span className="detail-value">{appointment.appointmentDate}</span>
           </p>
-          <p>
+          <p className="detail-label">
             Hora:
-            {' '}
-            {appointment.appointmentTime}
+            <span className="detail-value">{appointment.appointmentTime}</span>
           </p>
-          <p>
+          <p className="detail-label">
             Telefone para contato:
-            {' '}
-            {appointment.clientPhone}
+            <span className="detail-value">{appointment.clientPhone}</span>
           </p>
         </div>
 

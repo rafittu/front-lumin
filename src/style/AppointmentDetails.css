@@ -1,0 +1,36 @@
+#appointment-details {
+  background-color: #ffffff7a;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin-top: 21px;
+  margin-bottom: 45px;
+  padding: 21px 37px 21px 37px;
+}
+
+#appointment-details p {
+  margin: 10px 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.detail-label {
+  color: #24292e;
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  margin-left: 27px;
+}
+
+.detail-value {
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 18px;
+  font-weight: 350;
+  line-height: 21px;
+  margin-left: 21px;
+}
