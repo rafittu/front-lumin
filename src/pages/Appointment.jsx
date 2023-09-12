@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+import '../style/AppointmentDetails.css';
+
 function AppointmentDetails() {
   const { id } = useParams();
   const appointmentId = id;
@@ -43,28 +45,36 @@ function AppointmentDetails() {
     <section>
       <Navbar />
 
-      <div>
-        <h2>Detalhes do Compromisso:</h2>
-        <p>
-          Cliente:
-          {' '}
-          {appointment.clientName}
-        </p>
-        <p>
-          Data:
-          {' '}
-          {appointment.appointmentDate}
-        </p>
-        <p>
-          Hora:
-          {' '}
-          {appointment.appointmentTime}
-        </p>
-        <p>
-          Telefone para contato:
-          {' '}
-          {appointment.clientPhone}
-        </p>
+      <div id="schedule-container">
+        <h1>Detalhes do agendamento:</h1>
+        <div id="appointment-details">
+          <p>
+            Cliente:
+            {' '}
+            {appointment.clientName}
+          </p>
+          <p>
+            Data:
+            {' '}
+            {appointment.appointmentDate}
+          </p>
+          <p>
+            Hora:
+            {' '}
+            {appointment.appointmentTime}
+          </p>
+          <p>
+            Telefone para contato:
+            {' '}
+            {appointment.clientPhone}
+          </p>
+        </div>
+
+        <div className="inputs-buttons">
+          <button type="button">
+            Voltar
+          </button>
+        </div>
       </div>
     </section>
   );
