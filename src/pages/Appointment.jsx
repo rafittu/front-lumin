@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
 import '../style/AppointmentDetails.css';
 
 function AppointmentDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const appointmentId = id;
+
   const [appointment, setAppointment] = useState(null);
 
   const accessToken = localStorage.getItem('accessToken');
@@ -41,6 +43,10 @@ function AppointmentDetails() {
     return <div>Carregando detalhes do compromisso...</div>;
   }
 
+  const redirect = () => {
+    navigate('/schedules');
+  };
+
   return (
     <section>
       <Navbar />
@@ -67,7 +73,7 @@ function AppointmentDetails() {
         </div>
 
         <div className="inputs-buttons">
-          <button type="button">
+          <button type="button" onClick={redirect}>
             Voltar
           </button>
         </div>
