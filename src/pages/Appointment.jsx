@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function AppointmentDetails() {
   const { id } = useParams();
@@ -26,9 +27,6 @@ function AppointmentDetails() {
         );
 
         setAppointment(response.data.appointments[0]);
-
-        console.log(response.data.appointments[0]);
-        console.log(appointment);
       } catch (error) {
         console.error(error.response.data);
       }
@@ -38,29 +36,33 @@ function AppointmentDetails() {
   }, [id]);
 
   return (
-    <div>
-      <h2>Detalhes do Compromisso:</h2>
-      <p>
-        Cliente:
-        {' '}
-        {appointment.clientName}
-      </p>
-      <p>
-        Data:
-        {' '}
-        {appointment.appointmentDate}
-      </p>
-      <p>
-        Hora:
-        {' '}
-        {appointment.appointmentTime}
-      </p>
-      <p>
-        Telefone para contato:
-        {' '}
-        {appointment.clientPhone}
-      </p>
-    </div>
+    <section>
+      <Navbar />
+
+      <div>
+        <h2>Detalhes do Compromisso:</h2>
+        <p>
+          Cliente:
+          {' '}
+          {appointment.clientName}
+        </p>
+        <p>
+          Data:
+          {' '}
+          {appointment.appointmentDate}
+        </p>
+        <p>
+          Hora:
+          {' '}
+          {appointment.appointmentTime}
+        </p>
+        <p>
+          Telefone para contato:
+          {' '}
+          {appointment.clientPhone}
+        </p>
+      </div>
+    </section>
   );
 }
 
