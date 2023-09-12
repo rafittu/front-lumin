@@ -37,7 +37,31 @@ function AppointmentDetails() {
     fetchAppointmentDetails();
   }, [id]);
 
-  return <h1>Detalhes do compromisso</h1>;
+  return (
+    <div>
+      <h2>Detalhes do Compromisso:</h2>
+      <p>
+        Cliente:
+        {' '}
+        {appointment.clientName}
+      </p>
+      <p>
+        Data:
+        {' '}
+        {appointment.appointmentDate}
+      </p>
+      <p>
+        Hora:
+        {' '}
+        {appointment.appointmentTime}
+      </p>
+      <p>
+        Telefone para contato:
+        {' '}
+        {appointment.clientPhone}
+      </p>
+    </div>
+  );
 }
 
 export default AppointmentDetails;
