@@ -44,7 +44,7 @@ function AppointmentDetails() {
   }
 
   const redirect = () => {
-    navigate('/schedules');
+    navigate(-1);
   };
 
   const formatDate = (dateString) => {
