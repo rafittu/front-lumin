@@ -1,0 +1,22 @@
+#today-appointments {
+  margin-top: 27px;
+  padding: 21px;
+}
+
+#today-appointments ul {
+  list-style: none;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#today-appointments li {
+  margin: 12px 7px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f57e;
+  padding: 9px 27px 11px 9px;
+}
