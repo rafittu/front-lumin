@@ -1,9 +1,12 @@
 import React from 'react';
-
-import '../style/AppointmentDetails.css';
+import Navbar from '../components/Navbar';
 
 function AppointmentsByDate() {
-  return <h1>today appointments</h1>;
+  return (
+    <section>
+      <Navbar />
+    </section>
+  );
 }
 
 export default AppointmentsByDate;
