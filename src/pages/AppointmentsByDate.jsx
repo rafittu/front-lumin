@@ -27,7 +27,18 @@ function AppointmentsByDate() {
           },
         );
 
-        setAppointments(response.data.appointments);
+        const sortedAppointments = response.data.appointments.sort((a, b) => {
+          const [hoursA, minutesA] = a.appointmentTime.split(':').map(Number);
+          const [hoursB, minutesB] = b.appointmentTime.split(':').map(Number);
+
+          if (hoursA !== hoursB) {
+            return hoursA - hoursB;
+          }
+
+          return minutesA - minutesB;
+        });
+
+        setAppointments(sortedAppointments);
       } catch (error) {
         console.error(error.response.data);
       }
