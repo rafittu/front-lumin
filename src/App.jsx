@@ -11,12 +11,18 @@ import Schedules from './pages/Schedules';
 
 import './style/App.css';
 import AppointmentDetails from './pages/Appointment';
+import AppointmentsByDate from './pages/AppointmentsByDate';
 
 function App() {
   return (
     <div className="main-container">
       <UserProvider>
         <Routes>
+          <Route
+            exact
+            path="daily-appointments/:date"
+            element={<AppointmentsByDate />}
+          />
           <Route
             exact
             path="/appointment/:id"
