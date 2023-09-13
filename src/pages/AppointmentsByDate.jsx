@@ -37,6 +37,29 @@ function AppointmentsByDate() {
   return (
     <section>
       <Navbar />
+
+      <div id="schedule-container">
+        <h1>
+          Agenda do dia -
+          {' '}
+          {date}
+        </h1>
+        <div id="today-appointments">
+          <ul>
+            {appointments.map((appointment) => (
+              <li key={appointment.id}>
+                <a href={`/appointment/${appointment.id}`}>
+                  {appointment.clientName}
+                  {' '}
+                  -
+                  {' '}
+                  {appointment.appointmentTime}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }
