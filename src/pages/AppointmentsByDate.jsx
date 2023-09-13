@@ -52,6 +52,10 @@ function AppointmentsByDate() {
     return `${day}/${month}/${year}`;
   };
 
+  if (!appointments) {
+    return <div>Carregando agenda...</div>;
+  }
+
   return (
     <section>
       <Navbar />
