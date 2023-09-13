@@ -34,6 +34,11 @@ function AppointmentsByDate() {
     fetchAppointments();
   }, [date]);
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <section>
       <Navbar />
@@ -42,7 +47,7 @@ function AppointmentsByDate() {
         <h1>
           Agenda do dia -
           {' '}
-          {date}
+          {formatDate(date)}
         </h1>
         <div id="today-appointments">
           <ul>
