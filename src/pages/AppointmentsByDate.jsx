@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+import '../style/AppointmentsByDate.css';
+
 function AppointmentsByDate() {
   const { date } = useParams();
   const [appointments, setAppointments] = useState([]);
@@ -49,6 +51,7 @@ function AppointmentsByDate() {
           {' '}
           {formatDate(date)}
         </h1>
+
         <div id="today-appointments">
           <ul>
             {appointments.map((appointment) => (
