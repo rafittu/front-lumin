@@ -107,6 +107,7 @@ function AppointmentDetails() {
                       ...editedAppointment,
                       appointmentDate: e.target.value,
                     })}
+                    className="edit-appointment"
                   />
                 ) : (
                   <span className="detail-value">
@@ -125,13 +126,14 @@ function AppointmentDetails() {
                       ...editedAppointment,
                       appointmentTime: e.target.value,
                     })}
+                    className="edit-appointment"
                   />
                 ) : (
                   <span className="detail-value">{appointment.appointmentTime}</span>
                 )}
               </p>
               <p className="detail-label">
-                Telefone para contato:
+                Telefone:
                 {isEditing ? (
                   <input
                     type="text"
@@ -140,6 +142,7 @@ function AppointmentDetails() {
                       ...editedAppointment,
                       clientPhone: e.target.value,
                     })}
+                    className="edit-appointment"
                   />
                 ) : (
                   <span className="detail-value">{appointment.clientPhone}</span>
@@ -153,7 +156,7 @@ function AppointmentDetails() {
           <div className="inputs-buttons">
             {isEditing ? (
               <button type="button" onClick={handleEdit}>
-                Enviar
+                Salvar
               </button>
             ) : (
               <button type="button" onClick={toggleEdit}>
