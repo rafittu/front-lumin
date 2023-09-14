@@ -11,6 +11,8 @@ function AppointmentDetails() {
   const appointmentId = id;
 
   const [appointment, setAppointment] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedAppointment, setEditedAppointment] = useState({});
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -31,6 +33,7 @@ function AppointmentDetails() {
         );
 
         setAppointment(response.data.appointments[0]);
+        setEditedAppointment({ ...response.data.appointments[0] });
       } catch (error) {
         console.error(error.response.data);
       }
@@ -39,17 +42,17 @@ function AppointmentDetails() {
     fetchAppointmentDetails();
   }, [id]);
 
-  if (!appointment) {
-    return <div>Carregando detalhes do compromisso...</div>;
-  }
-
-  const redirect = () => {
-    navigate(-1);
-  };
-
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
+  };
+
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const redirect = () => {
+    navigate(-1);
   };
 
   return (
@@ -59,24 +62,76 @@ function AppointmentDetails() {
       <div id="schedule-container">
         <h1>Detalhes do agendamento</h1>
         <div id="appointment-details">
-          <p className="detail-label">
-            Cliente:
-            <span className="detail-value">{appointment.clientName}</span>
-          </p>
-          <p className="detail-label">
-            Data:
-            <span className="detail-value">
-              {formatDate(appointment.appointmentDate)}
-            </span>
-          </p>
-          <p className="detail-label">
-            Hora:
-            <span className="detail-value">{appointment.appointmentTime}</span>
-          </p>
-          <p className="detail-label">
-            Telefone para contato:
-            <span className="detail-value">{appointment.clientPhone}</span>
-          </p>
+          {appointment ? (
+            <>
+              <p className="detail-label">
+                Cliente:
+                <span className="detail-value">{appointment.clientName}</span>
+              </p>
+              <p className="detail-label">
+                Data:
+                {isEditing ? (
+                  <input
+                    type="date"
+                    value={editedAppointment.appointmentDate}
+                    onChange={(e) => setEditedAppointment({
+                      ...editedAppointment,
+                      appointmentDate: e.target.value,
+                    })}
+                  />
+                ) : (
+                  <span className="detail-value">
+                    {formatDate(appointment.appointmentDate)}
+                  </span>
+                )}
+              </p>
+              <p className="detail-label">
+                Hora:
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editedAppointment.appointmentTime}
+                    placeholder="hh:mm"
+                    onChange={(e) => setEditedAppointment({
+                      ...editedAppointment,
+                      appointmentTime: e.target.value,
+                    })}
+                  />
+                ) : (
+                  <span className="detail-value">{appointment.appointmentTime}</span>
+                )}
+              </p>
+              <p className="detail-label">
+                Telefone para contato:
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editedAppointment.clientPhone}
+                    onChange={(e) => setEditedAppointment({
+                      ...editedAppointment,
+                      clientPhone: e.target.value,
+                    })}
+                  />
+                ) : (
+                  <span className="detail-value">{appointment.clientPhone}</span>
+                )}
+              </p>
+            </>
+          ) : (
+            <div>Carregando detalhes do compromisso...</div>
+          )}
+
+          <div className="inputs-buttons">
+            {isEditing ? (
+              <button type="button" onClick={handleEdit}>
+                Enviar
+              </button>
+            ) : (
+              <button type="button" onClick={toggleEdit}>
+                Editar Compromisso
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="inputs-buttons">
