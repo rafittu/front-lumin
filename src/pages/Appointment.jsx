@@ -59,7 +59,6 @@ function AppointmentDetails() {
     };
 
     try {
-      console.log(appointment.id);
       await axios.patch(
         `http://localhost:3001/schedules/update/${appointment.id}`,
         updatedFields,
@@ -82,7 +81,7 @@ function AppointmentDetails() {
   };
 
   const redirect = () => {
-    navigate(-1);
+    navigate(`/daily-appointments/${appointment.appointmentDate}`);
   };
 
   return (
