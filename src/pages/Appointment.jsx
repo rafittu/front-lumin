@@ -51,6 +51,36 @@ function AppointmentDetails() {
     setIsEditing(!isEditing);
   };
 
+  const handleEdit = async () => {
+    const updatedFields = {
+      appointmentDate: editedAppointment.appointmentDate,
+      appointmentTime: editedAppointment.appointmentTime,
+      clientPhone: editedAppointment.clientPhone,
+    };
+
+    try {
+      console.log(appointment.id);
+      await axios.patch(
+        `http://localhost:3001/schedules/update/${appointment.id}`,
+        updatedFields,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            professionalId: userData.id,
+          },
+        },
+      );
+
+      setAppointment({ ...editedAppointment });
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+
   const redirect = () => {
     navigate(-1);
   };
