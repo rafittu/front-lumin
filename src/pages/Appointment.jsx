@@ -51,6 +51,10 @@ function AppointmentDetails() {
     setIsEditing(!isEditing);
   };
 
+  const redirect = () => {
+    navigate(`/daily-appointments/${appointment.appointmentDate}`);
+  };
+
   const handleEdit = async () => {
     const updatedFields = {
       appointmentDate: editedAppointment.appointmentDate,
@@ -80,8 +84,21 @@ function AppointmentDetails() {
     }
   };
 
-  const redirect = () => {
-    navigate(`/daily-appointments/${appointment.appointmentDate}`);
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `http://localhost:3001/schedules/delete/${appointmentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      redirect();
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
 
   return (
@@ -160,9 +177,13 @@ function AppointmentDetails() {
               </button>
             ) : (
               <button type="button" onClick={toggleEdit}>
-                Editar Compromisso
+                Editar
               </button>
             )}
+
+            <button type="button" onClick={handleDelete}>
+              Excluir
+            </button>
           </div>
         </div>
 
