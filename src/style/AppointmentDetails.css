@@ -10,6 +10,10 @@
   padding: 21px 37px 21px 37px;
 }
 
+#appointment-details button {
+  margin-top: 11px;
+}
+
 #appointment-details p {
   margin: 10px 0;
   font-size: 18px;
