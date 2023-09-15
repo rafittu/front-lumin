@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext, useContext, useMemo, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
 const AppointmentContext = createContext();
