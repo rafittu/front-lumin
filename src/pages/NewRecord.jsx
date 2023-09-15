@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import { useAppointment } from '../contexts/AppointmentContext';
 
+import '../style/NewRecord.css';
+
 function NewRecord() {
   const { appointmentData } = useAppointment();
   const { clientName, clientPhone, appointmentDate } = appointmentData;
