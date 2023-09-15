@@ -21,7 +21,7 @@ function App() {
       <UserProvider>
         <AppointmentProvider>
           <Routes>
-            <Route exact path="record/:appointmentId" element={<NewRecord />} />
+            <Route exact path="record/new" element={<NewRecord />} />
             <Route
               exact
               path="daily-appointments/:date"

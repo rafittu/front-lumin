@@ -199,7 +199,7 @@ function AppointmentDetails() {
             Voltar
           </button>
 
-          <Link to={`/record/${id}`}>
+          <Link to="/record/new">
             <button type="button">Iniciar atendimento</button>
           </Link>
         </div>
