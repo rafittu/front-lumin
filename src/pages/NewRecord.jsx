@@ -1,11 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAppointment } from '../contexts/AppointmentContext';
 
 function NewRecord() {
-  const { appointmentId } = useParams();
   const { appointmentData } = useAppointment();
+
+  if (!appointmentData) {
+    return (
+      <div>
+        <p>Carregando dados para atendimento...</p>
+      </div>
+    );
+  }
 
   return (
     <section>
