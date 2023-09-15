@@ -8,16 +8,18 @@ import Home from './pages/Home';
 import { UserProvider } from './contexts/UserContext';
 import ConfirmAccount from './pages/ConfirmAccount';
 import Schedules from './pages/Schedules';
-
-import './style/App.css';
 import AppointmentDetails from './pages/Appointment';
 import AppointmentsByDate from './pages/AppointmentsByDate';
+import NewRecord from './pages/NewRecord';
+
+import './style/App.css';
 
 function App() {
   return (
     <div className="main-container">
       <UserProvider>
         <Routes>
+          <Route exact path="record/:appointmentId" element={<NewRecord />} />
           <Route
             exact
             path="daily-appointments/:date"
