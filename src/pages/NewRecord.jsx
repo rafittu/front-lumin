@@ -6,7 +6,7 @@ import '../style/NewRecord.css';
 
 function NewRecord() {
   const { appointmentData } = useAppointment();
-  const { clientName, clientPhone, appointmentDate } = appointmentData;
+  const { clientName, appointmentDate } = appointmentData;
 
   if (!appointmentData) {
     return (
@@ -24,9 +24,9 @@ function NewRecord() {
         <h1>Novo Registro de Atendimento</h1>
 
         <form>
-          <div>
+          <div id="record-header">
             <label htmlFor="clientName">
-              Nome do Cliente:
+              Cliente:
               <input
                 type="text"
                 id="clientName"
@@ -35,20 +35,7 @@ function NewRecord() {
                 readOnly
               />
             </label>
-          </div>
-          <div>
-            <label htmlFor="clientPhone">
-              Telefone:
-              <input
-                type="text"
-                id="clientPhone"
-                name="clientPhone"
-                value={clientPhone}
-                readOnly
-              />
-            </label>
-          </div>
-          <div>
+
             <label htmlFor="appointmentDate">
               Data do Atendimento:
               <input
