@@ -16,6 +16,11 @@ function NewRecord() {
     );
   }
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <section>
       <Navbar />
@@ -42,7 +47,7 @@ function NewRecord() {
                 type="text"
                 id="appointmentDate"
                 name="appointmentDate"
-                value={appointmentDate}
+                value={formatDate(appointmentDate)}
                 readOnly
               />
             </label>
