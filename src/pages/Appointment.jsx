@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import { useAppointment } from '../contexts/AppointmentContext';
 
 import '../style/AppointmentDetails.css';
 
@@ -9,6 +10,7 @@ function AppointmentDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const appointmentId = id;
+  const { setAppointmentData } = useAppointment();
 
   const [appointment, setAppointment] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -33,6 +35,7 @@ function AppointmentDetails() {
         );
 
         setAppointment(response.data.appointments[0]);
+        setAppointmentData(response.data.appointments[0]);
         setEditedAppointment({ ...response.data.appointments[0] });
       } catch (error) {
         console.error(error.response.data);
@@ -146,7 +149,9 @@ function AppointmentDetails() {
                     className="edit-appointment"
                   />
                 ) : (
-                  <span className="detail-value">{appointment.appointmentTime}</span>
+                  <span className="detail-value">
+                    {appointment.appointmentTime}
+                  </span>
                 )}
               </p>
               <p className="detail-label">
@@ -162,7 +167,9 @@ function AppointmentDetails() {
                     className="edit-appointment"
                   />
                 ) : (
-                  <span className="detail-value">{appointment.clientPhone}</span>
+                  <span className="detail-value">
+                    {appointment.clientPhone}
+                  </span>
                 )}
               </p>
             </>
@@ -191,6 +198,10 @@ function AppointmentDetails() {
           <button type="button" onClick={redirect}>
             Voltar
           </button>
+
+          <Link to="/record/new">
+            <button type="button">Iniciar atendimento</button>
+          </Link>
         </div>
       </div>
     </section>
