@@ -13,40 +13,47 @@ import AppointmentsByDate from './pages/AppointmentsByDate';
 import NewRecord from './pages/NewRecord';
 
 import './style/App.css';
+import { AppointmentProvider } from './contexts/AppointmentContext';
 
 function App() {
   return (
     <div className="main-container">
       <UserProvider>
-        <Routes>
-          <Route exact path="record/:appointmentId" element={<NewRecord />} />
-          <Route
-            exact
-            path="daily-appointments/:date"
-            element={<AppointmentsByDate />}
-          />
-          <Route
-            exact
-            path="/appointment/:id"
-            element={<AppointmentDetails />}
-          />
-          <Route exact path="/schedules" element={<Schedules />} />
-          <Route exact path="/home" element={<Home />} />
-          <Route
-            exact
-            path="/email-confirmation/:token"
-            element={<ConfirmAccount />}
-          />
-          <Route
-            exact
-            path="/recover-password/:token"
-            element={<ResetPassword />}
-          />
-          <Route exact path="/recover-password" element={<RecoverPassword />} />
-          <Route exact path="/signin" element={<SignIn />} />
-          <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/" element={<SignIn />} />
-        </Routes>
+        <AppointmentProvider>
+          <Routes>
+            <Route exact path="record/:appointmentId" element={<NewRecord />} />
+            <Route
+              exact
+              path="daily-appointments/:date"
+              element={<AppointmentsByDate />}
+            />
+            <Route
+              exact
+              path="/appointment/:id"
+              element={<AppointmentDetails />}
+            />
+            <Route exact path="/schedules" element={<Schedules />} />
+            <Route exact path="/home" element={<Home />} />
+            <Route
+              exact
+              path="/email-confirmation/:token"
+              element={<ConfirmAccount />}
+            />
+            <Route
+              exact
+              path="/recover-password/:token"
+              element={<ResetPassword />}
+            />
+            <Route
+              exact
+              path="/recover-password"
+              element={<RecoverPassword />}
+            />
+            <Route exact path="/signin" element={<SignIn />} />
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/" element={<SignIn />} />
+          </Routes>
+        </AppointmentProvider>
       </UserProvider>
     </div>
   );
