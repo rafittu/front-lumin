@@ -9,6 +9,7 @@ import '../style/Schedules.css';
 function Schedules() {
   const [appointments, setAppointments] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [apiErrors, setApiErros] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -33,7 +34,7 @@ function Schedules() {
 
         setAppointments(sortedAppointments);
       } catch (error) {
-        console.log(error.response.data);
+        setApiErros('falha ao carregar agenda');
       }
     };
 
@@ -49,6 +50,10 @@ function Schedules() {
         <AppointmentCalendar appointments={appointments} />
 
         {showForm ? <AppointmentForm /> : null}
+
+        {apiErrors && (
+          <div className="error-message">{apiErrors}</div>
+        )}
 
         <div className="inputs-buttons">
           {!showForm ? (
