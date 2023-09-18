@@ -38,6 +38,11 @@ function ShowRecord() {
     fetchRecord();
   }, [recordId, accessToken, userData.id]);
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <section>
       <Navbar />
@@ -56,7 +61,7 @@ function ShowRecord() {
                 <p>
                   <strong>Data do Atendimento:</strong>
                   {' '}
-                  {record.scheduledDate}
+                  {formatDate(record.scheduledDate)}
                 </p>
               </div>
               <div id="record-content">
