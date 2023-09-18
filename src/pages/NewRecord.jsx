@@ -13,6 +13,7 @@ function NewRecord() {
   const appointmentId = id;
 
   const [record, setRecord] = useState('');
+  const [apiErrors, setApiErros] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -54,7 +55,7 @@ function NewRecord() {
 
       navigate(`/record/${response.data.recordId}`);
     } catch (error) {
-      console.error(error.response.data);
+      setApiErros('ficha de atendimento só pode ser criada na data da consulta');
     }
   };
 
@@ -102,6 +103,11 @@ function NewRecord() {
               />
             </label>
           </div>
+
+          {apiErrors && (
+          <div className="error-message">{apiErrors}</div>
+          )}
+
           <div>
             <button type="submit">Salvar Registro</button>
           </div>
