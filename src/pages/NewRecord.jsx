@@ -90,15 +90,14 @@ function NewRecord() {
               />
             </label>
           </div>
-          <div>
+          <div id="input-record">
             <label htmlFor="comments">
-              Comentários:
               <textarea
                 id="comments"
                 name="comments"
                 value={record}
                 onChange={(e) => setRecord(e.target.value)}
-                placeholder="Adicione seus comentários aqui..."
+                placeholder="Relato do atendimento"
                 rows="12"
               />
             </label>

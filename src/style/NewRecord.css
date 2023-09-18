@@ -55,6 +55,20 @@
     margin-left: 10px;
     background-color: rgba(245, 247, 241, 0.808);
   }
+
+  #input-record {
+    width: 90%;
+  }
+
+  #comments {
+    width: 80%;
+    background-color: #7c795d15;
+    color: rgb(1, 8, 14);
+    border-radius: 3px;
+    padding: 18px;
+    font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  }
   
  
   /* button {
