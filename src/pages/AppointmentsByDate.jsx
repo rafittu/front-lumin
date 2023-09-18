@@ -8,6 +8,7 @@ import '../style/AppointmentsByDate.css';
 function AppointmentsByDate() {
   const { date } = useParams();
   const [appointments, setAppointments] = useState([]);
+  const [apiErrors, setApiErros] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -40,7 +41,7 @@ function AppointmentsByDate() {
 
         setAppointments(sortedAppointments);
       } catch (error) {
-        console.error(error.response.data);
+        setApiErros('falha ao carregar agenda');
       }
     };
 
@@ -82,6 +83,10 @@ function AppointmentsByDate() {
             ))}
           </ul>
         </div>
+
+        {apiErrors && (
+          <div className="error-message">{apiErrors}</div>
+        )}
       </div>
     </section>
   );
