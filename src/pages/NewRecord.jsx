@@ -107,7 +107,7 @@ function NewRecord() {
           <div className="error-message">{apiErrors}</div>
           )}
 
-          <div>
+          <div id="record-button">
             <button type="submit">Salvar Registro</button>
           </div>
         </form>
