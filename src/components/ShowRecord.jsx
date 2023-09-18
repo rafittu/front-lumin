@@ -10,6 +10,7 @@ function ShowRecord() {
 
   const [record, setRecord] = useState('');
   const [apiErrors, setApiErros] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -43,6 +44,27 @@ function ShowRecord() {
     return `${day}/${month}/${year}`;
   };
 
+  const handleUpdateRecord = async () => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:3001/record/update/${recordId}`,
+        {
+          record: record.record,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      setRecord({ ...record, record: response.data.record });
+      setIsEditing(false);
+    } catch (error) {
+      setApiErros('Falha ao atualizar o registro');
+    }
+  };
+
   return (
     <section>
       <Navbar />
@@ -65,9 +87,22 @@ function ShowRecord() {
                 </p>
               </div>
               <div id="record-content">
-                <p>{record.record}</p>
+                {isEditing ? (
+                  <textarea
+                    value={record.record}
+                    onChange={(e) => setRecord({ ...record, record: e.target.value })}
+                  />
+                ) : (
+                  <p>{record.record}</p>
+                )}
+                {isEditing && (
+                  <button type="button" onClick={handleUpdateRecord}>Atualizar</button>
+                )}
               </div>
             </div>
+            <button type="button" onClick={() => setIsEditing(!isEditing)}>
+              {isEditing ? 'Cancelar Edição' : 'Editar Record'}
+            </button>
           </>
         ) : (
           <p>Carregando ficha de atendimento...</p>
