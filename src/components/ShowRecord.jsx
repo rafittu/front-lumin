@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 
-import '../style/NewRecord.css';
+import '../style/ShowRecord.css';
 
 function ShowRecord() {
   const { recordId } = useParams();
@@ -13,14 +13,6 @@ function ShowRecord() {
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
-
-  if (!record) {
-    return (
-      <div>
-        <p>Carregando ficha de atendimento...</p>
-      </div>
-    );
-  }
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -44,14 +36,37 @@ function ShowRecord() {
     };
 
     fetchRecord();
-  }, []);
+  }, [recordId, accessToken, userData.id]);
 
   return (
     <section>
       <Navbar />
 
-      <div id="record-container">
-        <h1>Registro de Atendimento</h1>
+      <div id="record">
+        {record ? (
+          <>
+            <h1>Registro de Atendimento</h1>
+            <div id="record-header">
+              <div id="client-info">
+                <p>
+                  <strong>Nome do Cliente:</strong>
+                  {' '}
+                  {record.clientName}
+                </p>
+                <p>
+                  <strong>Data do Atendimento:</strong>
+                  {' '}
+                  {record.scheduledDate}
+                </p>
+              </div>
+              <div id="record-content">
+                <p>{record.record}</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <p>Carregando ficha de atendimento...</p>
+        )}
 
         {apiErrors && <div className="error-message">{apiErrors}</div>}
       </div>
