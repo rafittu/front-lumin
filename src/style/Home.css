@@ -50,5 +50,23 @@
 }
 
 .quote h1 {
-  padding-bottom: 12px;
+  color: #d54d7b;
+  font-family: 'Great Vibes', cursive;
+  font-size: 91px;
+  line-height: 160px;
+  font-weight: normal;
+  margin-bottom: 0px;
+  margin-top: -150px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+}
+
+.quote p {
+  color: #7a7c7f;
+  font-size: 29px;
+  font-family: 'Libre Baskerville', serif;
+  line-height: 45px;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+  padding-top: 20px;
 }
