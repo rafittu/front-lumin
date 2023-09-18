@@ -100,9 +100,11 @@ function ShowRecord() {
                 )}
               </div>
             </div>
-            <button type="button" onClick={() => setIsEditing(!isEditing)}>
-              {isEditing ? 'Cancelar Edição' : 'Editar Record'}
-            </button>
+            <div className="inputs-buttons">
+              <button type="button" onClick={() => setIsEditing(!isEditing)}>
+                {isEditing ? 'Cancelar Edição' : 'Editar Ficha'}
+              </button>
+            </div>
           </>
         ) : (
           <p>Carregando ficha de atendimento...</p>
