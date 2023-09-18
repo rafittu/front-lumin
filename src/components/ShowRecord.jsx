@@ -89,15 +89,19 @@ function ShowRecord() {
               <div id="record-content">
                 {isEditing ? (
                   <textarea
+                    id="input-record"
                     value={record.record}
                     onChange={(e) => setRecord({ ...record, record: e.target.value })}
+                    rows="12"
                   />
                 ) : (
                   <p>{record.record}</p>
                 )}
-                {isEditing && (
+                <div className="inputs-buttons">
+                  {isEditing && (
                   <button type="button" onClick={handleUpdateRecord}>Atualizar</button>
-                )}
+                  )}
+                </div>
               </div>
             </div>
             <div className="inputs-buttons">
