@@ -89,20 +89,26 @@ function ShowRecord() {
               <div id="record-content">
                 {isEditing ? (
                   <textarea
+                    id="input-record"
                     value={record.record}
                     onChange={(e) => setRecord({ ...record, record: e.target.value })}
+                    rows="12"
                   />
                 ) : (
                   <p>{record.record}</p>
                 )}
-                {isEditing && (
+                <div className="inputs-buttons">
+                  {isEditing && (
                   <button type="button" onClick={handleUpdateRecord}>Atualizar</button>
-                )}
+                  )}
+                </div>
               </div>
             </div>
-            <button type="button" onClick={() => setIsEditing(!isEditing)}>
-              {isEditing ? 'Cancelar Edição' : 'Editar Record'}
-            </button>
+            <div className="inputs-buttons">
+              <button type="button" onClick={() => setIsEditing(!isEditing)}>
+                {isEditing ? 'Cancelar Edição' : 'Editar Ficha'}
+              </button>
+            </div>
           </>
         ) : (
           <p>Carregando ficha de atendimento...</p>

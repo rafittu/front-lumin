@@ -33,6 +33,7 @@
 
   border: 2px solid #ccc;
   padding: 7px;
+  margin-bottom: 18px;
 }
 
 #client-info {
@@ -46,6 +47,20 @@
   font-size: 18px;
   line-height: 21px;
   margin: 21px;
+}
+
+#record-content {
+    width: 80%;
+}
+
+#record-content textarea {
+    width: 80%;
+    background-color: #c9c7bb15;
+    color: rgb(1, 8, 14);
+    border-radius: 3px;
+    padding: 18px;
+    font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
 #record-content p {
