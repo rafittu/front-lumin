@@ -15,6 +15,7 @@ function AppointmentDetails() {
   const [appointment, setAppointment] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedAppointment, setEditedAppointment] = useState({});
+  const [apiErrors, setApiErros] = useState('');
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -38,7 +39,7 @@ function AppointmentDetails() {
         setAppointmentData(response.data.appointments[0]);
         setEditedAppointment({ ...response.data.appointments[0] });
       } catch (error) {
-        console.error(error.response.data);
+        setApiErros('falha ao buscar detalhes do compromisso');
       }
     };
 
@@ -83,7 +84,7 @@ function AppointmentDetails() {
 
       setIsEditing(false);
     } catch (error) {
-      console.error(error.response.data);
+      setApiErros('data ou hora já reservada');
     }
   };
 
@@ -100,7 +101,7 @@ function AppointmentDetails() {
 
       redirect();
     } catch (error) {
-      console.error(error.response.data);
+      setApiErros('não foi possível deletar o compromisso');
     }
   };
 
@@ -175,6 +176,10 @@ function AppointmentDetails() {
             </>
           ) : (
             <div>Carregando detalhes do compromisso...</div>
+          )}
+
+          {apiErrors && (
+          <div className="error-message">{apiErrors}</div>
           )}
 
           <div className="inputs-buttons">
