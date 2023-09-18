@@ -21,12 +21,6 @@ function Navbar() {
         Clientes
       </Link>
       <Link
-        to="/records"
-        className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
-      >
-        Fichas
-      </Link>
-      <Link
         to="/payments"
         className={userData.status !== 'ACTIVE' ? 'disabled' : ''}
       >
