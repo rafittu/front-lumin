@@ -14,6 +14,7 @@ import NewRecord from './pages/NewRecord';
 
 import './style/App.css';
 import { AppointmentProvider } from './contexts/AppointmentContext';
+import ShowRecord from './components/ShowRecord';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <UserProvider>
         <AppointmentProvider>
           <Routes>
+            <Route exact path="record/:recordId" element={<ShowRecord />} />
             <Route exact path="record/new" element={<NewRecord />} />
             <Route
               exact
