@@ -10,6 +10,7 @@ function ClientsList() {
 
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -32,8 +33,37 @@ function ClientsList() {
     fetchClients();
   }, [accessToken, userData.id]);
 
+  const fetchClientAppointments = async (client) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/schedules/professional/filter/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            clientName: client.name,
+          },
+        },
+      );
+
+      const sortedAppointments = response.data.appointments.sort((a, b) => {
+        const dateA = new Date(a.scheduledDate);
+        const dateB = new Date(b.scheduledDate);
+
+        return dateA - dateB;
+      });
+
+      setAppointments(sortedAppointments);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const handleClientClick = (client) => {
     setSelectedClient(client);
+
+    fetchClientAppointments(client);
   };
 
   return (
@@ -75,7 +105,13 @@ function ClientsList() {
             {selectedClient ? (
               <>
                 <h2>Agendamentos</h2>
-                {/* Renderize os agendamentos do cliente aqui */}
+                {appointments.map((appointment) => (
+                  <li key={appointment.id}>
+                    <button type="button">
+                      {appointment.appointmentDate}
+                    </button>
+                  </li>
+                ))}
               </>
             ) : null}
           </div>
