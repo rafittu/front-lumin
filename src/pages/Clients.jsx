@@ -11,6 +11,7 @@ function ClientsList() {
   const [clients, setClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [appointments, setAppointments] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -66,16 +67,28 @@ function ClientsList() {
     fetchClientAppointments(client);
   };
 
+  const filteredClients = clients.filter((client) => client
+    .name.toLowerCase().includes(searchQuery.toLowerCase()));
+
   return (
     <section>
       <Navbar />
 
       <div id="clients-container">
         <div id="client-list">
+          <input
+            type="text"
+            placeholder="Pesquisar cliente..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <ul>
-            {clients.map((client) => (
+            {filteredClients.map((client) => (
               <li key={client.id}>
-                <button type="button" onClick={() => handleClientClick(client)}>
+                <button
+                  type="button"
+                  onClick={() => handleClientClick(client)}
+                >
                   {client.name}
                 </button>
               </li>
@@ -107,9 +120,7 @@ function ClientsList() {
                 <h2>Agendamentos</h2>
                 {appointments.map((appointment) => (
                   <li key={appointment.id}>
-                    <button type="button">
-                      {appointment.appointmentDate}
-                    </button>
+                    <button type="button">{appointment.appointmentDate}</button>
                   </li>
                 ))}
               </>
