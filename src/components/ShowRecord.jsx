@@ -73,7 +73,7 @@ function ShowRecord() {
         {record ? (
           <>
             <h1>Registro de Atendimento</h1>
-            <div id="record-header">
+            <div id="appointment-record-header">
               <div id="client-info">
                 <p>
                   <strong>Nome do Cliente:</strong>
