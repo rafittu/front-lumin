@@ -73,32 +73,23 @@ function ClientsList() {
     .name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleAppointmentClick = async (appointment) => {
-    const appointmentTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
-    const currentTime = new Date();
-
-    if (currentTime - appointmentTime > 1 * 60 * 60 * 1000) {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/record/filter/${userData.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-              appointmentId: appointment.id,
-            },
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/record/filter/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
           },
-        );
+          params: {
+            appointmentId: appointment.id,
+          },
+        },
+      );
 
-        navigate(`/record/${response.data.recordId}`);
-      } catch (error) {
-        console.log(error.response);
-      }
-
-      return;
+      navigate(`/record/${response.data.recordId}`);
+    } catch (error) {
+      navigate(`/appointment/${appointment.id}`);
     }
-
-    navigate(`/appointment/${appointment.id}`);
   };
 
   return (
