@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
 import '../style/Clients.css';
 
 function ClientsList() {
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
 
@@ -70,6 +72,35 @@ function ClientsList() {
   const filteredClients = clients.filter((client) => client
     .name.toLowerCase().includes(searchQuery.toLowerCase()));
 
+  const handleAppointmentClick = async (appointment) => {
+    const appointmentTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
+    const currentTime = new Date();
+
+    if (currentTime - appointmentTime > 1 * 60 * 60 * 1000) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/record/filter/${userData.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              appointmentId: appointment.id,
+            },
+          },
+        );
+
+        navigate(`/record/${response.data.recordId}`);
+      } catch (error) {
+        console.log(error.response);
+      }
+
+      return;
+    }
+
+    navigate(`/appointment/${appointment.id}`);
+  };
+
   return (
     <section>
       <Navbar />
@@ -120,7 +151,7 @@ function ClientsList() {
                 <h2>Agendamentos</h2>
                 {appointments.map((appointment) => (
                   <li key={appointment.id}>
-                    <button type="button">{appointment.appointmentDate}</button>
+                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{appointment.appointmentDate}</button>
                   </li>
                 ))}
               </>
