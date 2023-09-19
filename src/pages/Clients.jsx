@@ -36,6 +36,11 @@ function ClientsList() {
     fetchClients();
   }, [accessToken, userData.id]);
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   const fetchClientAppointments = async (client) => {
     try {
       const response = await axios.get(
@@ -142,7 +147,7 @@ function ClientsList() {
                 <h2>Agendamentos</h2>
                 {appointments.map((appointment) => (
                   <li key={appointment.id}>
-                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{appointment.appointmentDate}</button>
+                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
                   </li>
                 ))}
               </>
