@@ -206,7 +206,6 @@ function ClientsList() {
 
                 <div id="appointment-filter">
                   <label htmlFor="filterAppointments">
-                    Filtrar por:
                     <select
                       name="filterAppointments"
                       id="filterAppointments"
@@ -219,11 +218,13 @@ function ClientsList() {
                     </select>
                   </label>
                 </div>
-                {formatAppointments(appointments).map((appointment) => (
-                  <li key={appointment.id}>
-                    <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
-                  </li>
-                ))}
+                <span>
+                  {formatAppointments(appointments).map((appointment) => (
+                    <li key={appointment.id}>
+                      <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
+                    </li>
+                  ))}
+                </span>
               </>
             ) : null}
           </div>
