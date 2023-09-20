@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 
@@ -7,6 +7,7 @@ import '../style/ShowRecord.css';
 
 function ShowRecord() {
   const { recordId } = useParams();
+  const navigate = useNavigate();
 
   const [record, setRecord] = useState('');
   const [apiErrors, setApiErros] = useState('');
@@ -150,7 +151,7 @@ function ShowRecord() {
               </button>
 
               {payment && (
-              <button type="button">
+              <button type="button" onClick={() => navigate(`/payment/${payment.id}`)}>
                 Informação de Pagamento
               </button>
               )}
