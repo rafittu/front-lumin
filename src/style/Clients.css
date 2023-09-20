@@ -50,6 +50,12 @@ li {
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
+#client-list-btn:hover {
+    background-color: #ddd;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 #selected-client {
   width: 75%;
   display: flex;
@@ -96,6 +102,21 @@ li {
     border-radius: 7px;
     padding: 2px;
     max-width: 120px;
+}
+
+#appointment-list {
+    margin-top: -160px;
+    margin-right: 27%;
+}
+
+#appointment-list li {
+    padding-bottom: 3px;
+}
+
+#appointment-list li:hover {
+    background-color: #ddd;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 #client-payments {

@@ -218,7 +218,7 @@ function ClientsList() {
                     </select>
                   </label>
                 </div>
-                <span>
+                <span id="appointment-list">
                   {formatAppointments(appointments).map((appointment) => (
                     <li key={appointment.id}>
                       <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
