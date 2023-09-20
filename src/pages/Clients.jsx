@@ -15,6 +15,7 @@ function ClientsList() {
   const [appointments, setAppointments] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [payments, setPayments] = useState([]);
+  const [paymentFilter, setPaymentFilter] = useState('all');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -176,6 +177,7 @@ function ClientsList() {
             {selectedClient ? (
               <>
                 <h2>Agendamentos</h2>
+
                 {appointments.map((appointment) => (
                   <li key={appointment.id}>
                     <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
@@ -189,17 +191,45 @@ function ClientsList() {
             {selectedClient ? (
               <>
                 <h2>Histórico de Pagamentos</h2>
-                {payments.map((payment) => (
-                  <li key={payment.id}>
-                    <button type="button" onClick={() => navigate(`/payment/${payment.id}`)}>
-                      {formatDate(payment.appointmentDate)}
-                      {' '}
-                      -
-                      {' '}
-                      {formatStatus(payment.status)}
-                    </button>
-                  </li>
-                ))}
+
+                <div id="payment-filter">
+                  <label htmlFor="filterOptions">
+                    Filtrar por:
+                    <select
+                      name="filterOptions"
+                      id="filterOptions"
+                      value={paymentFilter}
+                      onChange={(e) => setPaymentFilter(e.target.value)}
+                    >
+                      <option value="all">Todos</option>
+                      <option value="em aberto">Em Aberto</option>
+                      <option value="pago">Pago</option>
+                    </select>
+                  </label>
+                </div>
+
+                {payments.map((payment) => {
+                  if (
+                    paymentFilter === 'all'
+                    || paymentFilter === formatStatus(payment.status)
+                  ) {
+                    return (
+                      <li key={payment.id}>
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/payment/${payment.id}`)}
+                        >
+                          {formatDate(payment.appointmentDate)}
+                          {' '}
+                          -
+                          {' '}
+                          {formatStatus(payment.status)}
+                        </button>
+                      </li>
+                    );
+                  }
+                  return null;
+                })}
               </>
             ) : null}
           </div>
