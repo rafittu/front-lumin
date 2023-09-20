@@ -191,7 +191,7 @@ function ClientsList() {
                 <h2>Histórico de Pagamentos</h2>
                 {payments.map((payment) => (
                   <li key={payment.id}>
-                    <button type="button">
+                    <button type="button" onClick={() => navigate(`/payment/${payment.id}`)}>
                       {formatDate(payment.appointmentDate)}
                       {' '}
                       -
