@@ -16,6 +16,7 @@ function ClientsList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [payments, setPayments] = useState([]);
   const [paymentFilter, setPaymentFilter] = useState('all');
+  const [appointmentFilter, setAppointmentFilter] = useState('all');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -44,6 +45,30 @@ function ClientsList() {
   };
 
   const formatStatus = (status) => (status === 'OPEN' ? 'em aberto' : 'pago');
+
+  const formatAppointments = (appointmentList) => {
+    if (appointmentFilter === 'all') {
+      return appointmentList;
+    }
+
+    if (appointmentFilter === 'past') {
+      const currentDate = new Date();
+      return appointmentList.filter((appointment) => {
+        const appointmentDate = new Date(appointment.appointmentDate);
+        return appointmentDate <= currentDate;
+      });
+    }
+
+    if (appointmentFilter === 'scheduled') {
+      const currentDate = new Date();
+      return appointmentList.filter((appointment) => {
+        const appointmentDate = new Date(appointment.appointmentDate);
+        return appointmentDate > currentDate;
+      });
+    }
+
+    return appointmentList;
+  };
 
   const fetchClientAppointments = async (client) => {
     try {
@@ -178,7 +203,22 @@ function ClientsList() {
               <>
                 <h2>Agendamentos</h2>
 
-                {appointments.map((appointment) => (
+                <div id="appointment-filter">
+                  <label htmlFor="filterAppointments">
+                    Filtrar por:
+                    <select
+                      name="filterAppointments"
+                      id="filterAppointments"
+                      value={appointmentFilter}
+                      onChange={(e) => setAppointmentFilter(e.target.value)}
+                    >
+                      <option value="all">Todos</option>
+                      <option value="past">Passados</option>
+                      <option value="scheduled">Agendados</option>
+                    </select>
+                  </label>
+                </div>
+                {formatAppointments(appointments).map((appointment) => (
                   <li key={appointment.id}>
                     <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
                   </li>
