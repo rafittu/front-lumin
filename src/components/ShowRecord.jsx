@@ -11,6 +11,7 @@ function ShowRecord() {
   const [record, setRecord] = useState('');
   const [apiErrors, setApiErros] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [payment, setPayment] = useState(null);
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -36,7 +37,7 @@ function ShowRecord() {
       }
     };
 
-    const setPayment = async () => {
+    const handlePayment = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/payment/get/filter/${userData.id}`,
@@ -50,7 +51,11 @@ function ShowRecord() {
           },
         );
 
-        if (!response) {
+        const paymentData = response.data.payments[0];
+
+        setPayment(paymentData);
+
+        if (!paymentData) {
           await axios.post(
             'http://localhost:3001/payment/create',
             { status: 'OPEN' },
@@ -71,7 +76,7 @@ function ShowRecord() {
     };
 
     fetchRecord();
-    setPayment();
+    handlePayment();
   }, [recordId, accessToken, userData.id]);
 
   const formatDate = (dateString) => {
@@ -143,6 +148,12 @@ function ShowRecord() {
               <button type="button" onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? 'Cancelar Edição' : 'Editar Ficha'}
               </button>
+
+              {payment && (
+              <button type="button">
+                Informação de Pagamento
+              </button>
+              )}
             </div>
           </>
         ) : (
