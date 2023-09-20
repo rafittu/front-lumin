@@ -57,11 +57,15 @@ li {
   justify-content: space-around;
   flex-wrap: wrap;
   padding: 27px;
+  border-left: 2px solid #b1bec67e;
 }
 
 #client-details {
   max-height: 120px;
   width: 90%;
+  border-bottom: 2px solid #d2e3ee;
+  padding: 27px;
+  max-height: 90px;
 }
 
 #client-appointments {

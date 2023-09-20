@@ -184,7 +184,7 @@ function ClientsList() {
         <div id="selected-client">
           <div id="client-details">
             {selectedClient ? (
-              <>
+              <span id="client-info">
                 <p>
                   <strong>Nome:</strong>
                   {' '}
@@ -195,7 +195,7 @@ function ClientsList() {
                   {' '}
                   {selectedClient.phone}
                 </p>
-              </>
+              </span>
             ) : null}
           </div>
 
