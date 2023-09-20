@@ -170,6 +170,7 @@ function ClientsList() {
             {filteredClients.map((client) => (
               <li key={client.id}>
                 <button
+                  id="client-list-btn"
                   type="button"
                   onClick={() => handleClientClick(client)}
                 >
@@ -220,7 +221,7 @@ function ClientsList() {
                 </div>
                 {formatAppointments(appointments).map((appointment) => (
                   <li key={appointment.id}>
-                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
+                    <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
                   </li>
                 ))}
               </>
@@ -256,6 +257,7 @@ function ClientsList() {
                     return (
                       <li key={payment.id}>
                         <button
+                          id="client-list-btn"
                           type="button"
                           onClick={() => navigate(`/payment/${payment.id}`)}
                         >
