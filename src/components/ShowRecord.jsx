@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 
@@ -7,10 +7,12 @@ import '../style/ShowRecord.css';
 
 function ShowRecord() {
   const { recordId } = useParams();
+  const navigate = useNavigate();
 
   const [record, setRecord] = useState('');
   const [apiErrors, setApiErros] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [payment, setPayment] = useState(null);
 
   const accessToken = localStorage.getItem('accessToken');
   const userData = JSON.parse(localStorage.getItem('userData'));
@@ -36,28 +38,46 @@ function ShowRecord() {
       }
     };
 
-    const openPayment = async () => {
+    const handlePayment = async () => {
       try {
-        await axios.post(
-          'http://localhost:3001/payment/create',
-          { status: 'OPEN' },
+        const response = await axios.get(
+          `http://localhost:3001/payment/get/filter/${userData.id}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
             params: {
-              professionalId: userData.id,
               appointmentId: recordId,
             },
           },
         );
+
+        const paymentData = response.data.payments[0];
+
+        setPayment(paymentData);
+
+        if (!paymentData) {
+          await axios.post(
+            'http://localhost:3001/payment/create',
+            { status: 'OPEN' },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              params: {
+                professionalId: userData.id,
+                appointmentId: recordId,
+              },
+            },
+          );
+        }
       } catch (error) {
         setApiErros('não foi possível abrir um pagamento para está sessão');
       }
     };
 
     fetchRecord();
-    openPayment();
+    handlePayment();
   }, [recordId, accessToken, userData.id]);
 
   const formatDate = (dateString) => {
@@ -129,6 +149,12 @@ function ShowRecord() {
               <button type="button" onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? 'Cancelar Edição' : 'Editar Ficha'}
               </button>
+
+              {payment && (
+              <button type="button" onClick={() => navigate(`/payment/${payment.id}`)}>
+                Informação de Pagamento
+              </button>
+              )}
             </div>
           </>
         ) : (
