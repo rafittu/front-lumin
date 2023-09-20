@@ -36,7 +36,28 @@ function ShowRecord() {
       }
     };
 
+    const openPayment = async () => {
+      try {
+        await axios.post(
+          'http://localhost:3001/payment/create',
+          { status: 'OPEN' },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              professionalId: userData.id,
+              appointmentId: recordId,
+            },
+          },
+        );
+      } catch (error) {
+        setApiErros('não foi possível abrir um pagamento para está sessão');
+      }
+    };
+
     fetchRecord();
+    openPayment();
   }, [recordId, accessToken, userData.id]);
 
   const formatDate = (dateString) => {
