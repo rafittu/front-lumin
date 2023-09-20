@@ -51,9 +51,10 @@ li {
 }
 
 #client-list-btn:hover {
-    background-color: #ddd;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+  background-color: #8de4e7;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 9px;
 }
 
 #selected-client {
@@ -93,31 +94,31 @@ li {
 }
 
 #appointment-filter {
-    margin-top: -45px;
+  margin-top: -45px;
 }
 
 #appointment-filter select {
-    background-color: #f1f1f1;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border-radius: 7px;
-    padding: 2px;
-    max-width: 120px;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+  padding: 2px;
+  max-width: 120px;
 }
 
 #appointment-list {
-    margin-top: -160px;
-    margin-right: 27%;
+  margin-top: -170px;
+  margin-right: 27%;
 }
 
 #appointment-list li {
-    padding-bottom: 3px;
+  padding-bottom: 3px;
 }
 
-#appointment-list li:hover {
+/* #appointment-list li:hover {
     background-color: #ddd;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-}
+} */
 
 #client-payments {
   max-height: 270px;
