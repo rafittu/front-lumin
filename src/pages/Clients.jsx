@@ -14,6 +14,7 @@ function ClientsList() {
   const [selectedClient, setSelectedClient] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -68,10 +69,38 @@ function ClientsList() {
     }
   };
 
+  const fetchClientPayments = async (client) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/payment/get/filter/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            clientName: client.name,
+          },
+        },
+      );
+
+      const sortedPayments = response.data.payments.sort((a, b) => {
+        const dateA = new Date(a.appointmentDate);
+        const dateB = new Date(b.appointmentDate);
+
+        return dateA - dateB;
+      });
+
+      setPayments(sortedPayments);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const handleClientClick = (client) => {
     setSelectedClient(client);
 
     fetchClientAppointments(client);
+    fetchClientPayments(client);
   };
 
   const filteredClients = clients.filter((client) => client
@@ -158,7 +187,13 @@ function ClientsList() {
             {selectedClient ? (
               <>
                 <h2>Histórico de Pagamentos</h2>
-                {/* Renderize o histórico de pagamentos do cliente aqui */}
+                {payments.map((payment) => (
+                  <li key={payment.id}>
+                    <button type="button">
+                      {formatDate(payment.appointmentDate)}
+                    </button>
+                  </li>
+                ))}
               </>
             ) : null}
           </div>
