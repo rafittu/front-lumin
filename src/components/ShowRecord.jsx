@@ -36,28 +36,42 @@ function ShowRecord() {
       }
     };
 
-    const openPayment = async () => {
+    const setPayment = async () => {
       try {
-        await axios.post(
-          'http://localhost:3001/payment/create',
-          { status: 'OPEN' },
+        const response = await axios.get(
+          `http://localhost:3001/payment/get/filter/${userData.id}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
             params: {
-              professionalId: userData.id,
               appointmentId: recordId,
             },
           },
         );
+
+        if (!response) {
+          await axios.post(
+            'http://localhost:3001/payment/create',
+            { status: 'OPEN' },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              params: {
+                professionalId: userData.id,
+                appointmentId: recordId,
+              },
+            },
+          );
+        }
       } catch (error) {
         setApiErros('não foi possível abrir um pagamento para está sessão');
       }
     };
 
     fetchRecord();
-    openPayment();
+    setPayment();
   }, [recordId, accessToken, userData.id]);
 
   const formatDate = (dateString) => {
