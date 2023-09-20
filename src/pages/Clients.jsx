@@ -42,6 +42,8 @@ function ClientsList() {
     return `${day}/${month}/${year}`;
   };
 
+  const formatStatus = (status) => (status === 'OPEN' ? 'em aberto' : 'pago');
+
   const fetchClientAppointments = async (client) => {
     try {
       const response = await axios.get(
@@ -191,6 +193,10 @@ function ClientsList() {
                   <li key={payment.id}>
                     <button type="button">
                       {formatDate(payment.appointmentDate)}
+                      {' '}
+                      -
+                      {' '}
+                      {formatStatus(payment.status)}
                     </button>
                   </li>
                 ))}
