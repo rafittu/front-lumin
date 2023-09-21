@@ -114,12 +114,6 @@ li {
   padding-bottom: 3px;
 }
 
-/* #appointment-list li:hover {
-    background-color: #ddd;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-} */
-
 #client-payments {
   max-height: 270px;
   width: 37%;
