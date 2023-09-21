@@ -14,6 +14,10 @@ function ClientsList() {
   const [selectedClient, setSelectedClient] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [payments, setPayments] = useState([]);
+  const [paymentFilter, setPaymentFilter] = useState('all');
+  const [appointmentFilter, setAppointmentFilter] = useState('all');
+  const [apiErrors, setApiErrors] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -29,7 +33,7 @@ function ClientsList() {
 
         setClients(response.data.clients);
       } catch (error) {
-        console.log(error);
+        setApiErrors('não foi possível carregar a lista de clientes');
       }
     };
 
@@ -39,6 +43,32 @@ function ClientsList() {
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
+  };
+
+  const formatStatus = (status) => (status === 'OPEN' ? 'em aberto' : 'pago');
+
+  const formatAppointments = (appointmentList) => {
+    if (appointmentFilter === 'all') {
+      return appointmentList;
+    }
+
+    if (appointmentFilter === 'past') {
+      const currentDate = new Date();
+      return appointmentList.filter((appointment) => {
+        const appointmentDate = new Date(appointment.appointmentDate);
+        return appointmentDate <= currentDate;
+      });
+    }
+
+    if (appointmentFilter === 'scheduled') {
+      const currentDate = new Date();
+      return appointmentList.filter((appointment) => {
+        const appointmentDate = new Date(appointment.appointmentDate);
+        return appointmentDate > currentDate;
+      });
+    }
+
+    return appointmentList;
   };
 
   const fetchClientAppointments = async (client) => {
@@ -64,7 +94,34 @@ function ClientsList() {
 
       setAppointments(sortedAppointments);
     } catch (error) {
-      console.log(error.response);
+      setApiErrors('não foi possível carregar os agendamentos');
+    }
+  };
+
+  const fetchClientPayments = async (client) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/payment/get/filter/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            clientName: client.name,
+          },
+        },
+      );
+
+      const sortedPayments = response.data.payments.sort((a, b) => {
+        const dateA = new Date(a.appointmentDate);
+        const dateB = new Date(b.appointmentDate);
+
+        return dateA - dateB;
+      });
+
+      setPayments(sortedPayments);
+    } catch (error) {
+      setApiErrors('não foi possível carregar os pagamentos');
     }
   };
 
@@ -72,6 +129,7 @@ function ClientsList() {
     setSelectedClient(client);
 
     fetchClientAppointments(client);
+    fetchClientPayments(client);
   };
 
   const filteredClients = clients.filter((client) => client
@@ -113,6 +171,7 @@ function ClientsList() {
             {filteredClients.map((client) => (
               <li key={client.id}>
                 <button
+                  id="client-list-btn"
                   type="button"
                   onClick={() => handleClientClick(client)}
                 >
@@ -126,7 +185,7 @@ function ClientsList() {
         <div id="selected-client">
           <div id="client-details">
             {selectedClient ? (
-              <>
+              <span id="client-info">
                 <p>
                   <strong>Nome:</strong>
                   {' '}
@@ -137,19 +196,42 @@ function ClientsList() {
                   {' '}
                   {selectedClient.phone}
                 </p>
-              </>
+              </span>
             ) : null}
+
+            {apiErrors && (
+            <div className="error-msg">
+              <p>{apiErrors}</p>
+            </div>
+            )}
           </div>
 
           <div id="client-appointments">
             {selectedClient ? (
               <>
                 <h2>Agendamentos</h2>
-                {appointments.map((appointment) => (
-                  <li key={appointment.id}>
-                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
-                  </li>
-                ))}
+
+                <div id="appointment-filter">
+                  <label htmlFor="filterAppointments">
+                    <select
+                      name="filterAppointments"
+                      id="filterAppointments"
+                      value={appointmentFilter}
+                      onChange={(e) => setAppointmentFilter(e.target.value)}
+                    >
+                      <option value="all">Todos</option>
+                      <option value="past">Passados</option>
+                      <option value="scheduled">Agendados</option>
+                    </select>
+                  </label>
+                </div>
+                <span id="appointment-list">
+                  {formatAppointments(appointments).map((appointment) => (
+                    <li key={appointment.id}>
+                      <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
+                    </li>
+                  ))}
+                </span>
               </>
             ) : null}
           </div>
@@ -157,8 +239,49 @@ function ClientsList() {
           <div id="client-payments">
             {selectedClient ? (
               <>
-                <h2>Histórico de Pagamentos</h2>
-                {/* Renderize o histórico de pagamentos do cliente aqui */}
+                <h2>Pagamentos</h2>
+
+                <div id="payment-filter">
+                  <label htmlFor="filterOptions">
+                    <select
+                      name="filterOptions"
+                      id="filterOptions"
+                      value={paymentFilter}
+                      onChange={(e) => setPaymentFilter(e.target.value)}
+                    >
+                      <option value="all">Todos</option>
+                      <option value="em aberto">Em Aberto</option>
+                      <option value="pago">Pago</option>
+                    </select>
+                  </label>
+                </div>
+
+                <span id="payment-list">
+                  {payments.map((payment) => {
+                    if (
+                      paymentFilter === 'all'
+                    || paymentFilter === formatStatus(payment.status)
+                    ) {
+                      return (
+                        <li key={payment.id}>
+                          <button
+                            id="client-list-btn"
+                            type="button"
+                            onClick={() => navigate(`/payment/${payment.id}`)}
+                          >
+                            {formatDate(payment.appointmentDate)}
+                            {' '}
+                            -
+                            {' '}
+                            {formatStatus(payment.status)}
+                          </button>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </span>
+
               </>
             ) : null}
           </div>
