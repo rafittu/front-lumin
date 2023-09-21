@@ -32,16 +32,43 @@ function ClientPayment() {
     fetchPaymentDetails();
   }, [paymentId]);
 
+  const formatStatus = (status) => (status === 'OPEN' ? 'aberto' : 'pago');
+
   return (
     <section>
       <Navbar />
 
-      <div className="payment-container">
+      <div id="payment-container">
         <h1>Financeiro</h1>
 
-        {console.log(paymentData)}
-
         {apiErrors && <div className="error-message">{apiErrors}</div>}
+
+        <div id="payment-details">
+          {paymentData && (
+            <div className="payment-details">
+              <p>
+                Data de Pagamento:
+                {' '}
+                {paymentData.paymentDate || 'Não especificada'}
+              </p>
+              <p>
+                Forma de Pagamento:
+                {' '}
+                {paymentData.paymentMethod || 'Não especificada'}
+              </p>
+              <p>
+                Status:
+                {' '}
+                {formatStatus(paymentData.status)}
+              </p>
+              <p>
+                Total Pago:
+                {' '}
+                {paymentData.totalPaid || 'Não especificado'}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
