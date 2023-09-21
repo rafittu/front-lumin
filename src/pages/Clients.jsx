@@ -17,6 +17,7 @@ function ClientsList() {
   const [payments, setPayments] = useState([]);
   const [paymentFilter, setPaymentFilter] = useState('all');
   const [appointmentFilter, setAppointmentFilter] = useState('all');
+  const [apiErrors, setApiErrors] = useState(false);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -32,7 +33,7 @@ function ClientsList() {
 
         setClients(response.data.clients);
       } catch (error) {
-        console.log(error);
+        setApiErrors('não foi possível carregar a lista de clientes');
       }
     };
 
@@ -93,7 +94,7 @@ function ClientsList() {
 
       setAppointments(sortedAppointments);
     } catch (error) {
-      console.log(error.response);
+      setApiErrors('não foi possível carregar os agendamentos');
     }
   };
 
@@ -120,7 +121,7 @@ function ClientsList() {
 
       setPayments(sortedPayments);
     } catch (error) {
-      console.log(error.response);
+      setApiErrors('não foi possível carregar os pagamentos');
     }
   };
 
@@ -197,6 +198,12 @@ function ClientsList() {
                 </p>
               </span>
             ) : null}
+
+            {apiErrors && (
+            <div className="error-msg">
+              <p>{apiErrors}</p>
+            </div>
+            )}
           </div>
 
           <div id="client-appointments">
