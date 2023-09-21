@@ -118,4 +118,11 @@ li {
   max-height: 270px;
   width: 37%;
   margin-top: -90px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 2px solid #d2e3ee;
+  border-bottom: 2px solid #d2e3ee;
+  border-radius: 7px;
 }
