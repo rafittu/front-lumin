@@ -232,7 +232,7 @@ function ClientsList() {
           <div id="client-payments">
             {selectedClient ? (
               <>
-                <h2>Histórico de Pagamentos</h2>
+                <h2>Pagamentos</h2>
 
                 <div id="payment-filter">
                   <label htmlFor="filterOptions">
@@ -249,29 +249,32 @@ function ClientsList() {
                   </label>
                 </div>
 
-                {payments.map((payment) => {
-                  if (
-                    paymentFilter === 'all'
+                <span id="payment-list">
+                  {payments.map((payment) => {
+                    if (
+                      paymentFilter === 'all'
                     || paymentFilter === formatStatus(payment.status)
-                  ) {
-                    return (
-                      <li key={payment.id}>
-                        <button
-                          id="client-list-btn"
-                          type="button"
-                          onClick={() => navigate(`/payment/${payment.id}`)}
-                        >
-                          {formatDate(payment.appointmentDate)}
-                          {' '}
-                          -
-                          {' '}
-                          {formatStatus(payment.status)}
-                        </button>
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
+                    ) {
+                      return (
+                        <li key={payment.id}>
+                          <button
+                            id="client-list-btn"
+                            type="button"
+                            onClick={() => navigate(`/payment/${payment.id}`)}
+                          >
+                            {formatDate(payment.appointmentDate)}
+                            {' '}
+                            -
+                            {' '}
+                            {formatStatus(payment.status)}
+                          </button>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </span>
+
               </>
             ) : null}
           </div>
