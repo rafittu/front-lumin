@@ -170,6 +170,7 @@ function ClientsList() {
             {filteredClients.map((client) => (
               <li key={client.id}>
                 <button
+                  id="client-list-btn"
                   type="button"
                   onClick={() => handleClientClick(client)}
                 >
@@ -183,7 +184,7 @@ function ClientsList() {
         <div id="selected-client">
           <div id="client-details">
             {selectedClient ? (
-              <>
+              <span id="client-info">
                 <p>
                   <strong>Nome:</strong>
                   {' '}
@@ -194,7 +195,7 @@ function ClientsList() {
                   {' '}
                   {selectedClient.phone}
                 </p>
-              </>
+              </span>
             ) : null}
           </div>
 
@@ -205,7 +206,6 @@ function ClientsList() {
 
                 <div id="appointment-filter">
                   <label htmlFor="filterAppointments">
-                    Filtrar por:
                     <select
                       name="filterAppointments"
                       id="filterAppointments"
@@ -218,11 +218,13 @@ function ClientsList() {
                     </select>
                   </label>
                 </div>
-                {formatAppointments(appointments).map((appointment) => (
-                  <li key={appointment.id}>
-                    <button type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
-                  </li>
-                ))}
+                <span id="appointment-list">
+                  {formatAppointments(appointments).map((appointment) => (
+                    <li key={appointment.id}>
+                      <button id="client-list-btn" type="button" onClick={() => handleAppointmentClick(appointment)}>{formatDate(appointment.appointmentDate)}</button>
+                    </li>
+                  ))}
+                </span>
               </>
             ) : null}
           </div>
@@ -230,11 +232,10 @@ function ClientsList() {
           <div id="client-payments">
             {selectedClient ? (
               <>
-                <h2>Histórico de Pagamentos</h2>
+                <h2>Pagamentos</h2>
 
                 <div id="payment-filter">
                   <label htmlFor="filterOptions">
-                    Filtrar por:
                     <select
                       name="filterOptions"
                       id="filterOptions"
@@ -248,28 +249,32 @@ function ClientsList() {
                   </label>
                 </div>
 
-                {payments.map((payment) => {
-                  if (
-                    paymentFilter === 'all'
+                <span id="payment-list">
+                  {payments.map((payment) => {
+                    if (
+                      paymentFilter === 'all'
                     || paymentFilter === formatStatus(payment.status)
-                  ) {
-                    return (
-                      <li key={payment.id}>
-                        <button
-                          type="button"
-                          onClick={() => navigate(`/payment/${payment.id}`)}
-                        >
-                          {formatDate(payment.appointmentDate)}
-                          {' '}
-                          -
-                          {' '}
-                          {formatStatus(payment.status)}
-                        </button>
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
+                    ) {
+                      return (
+                        <li key={payment.id}>
+                          <button
+                            id="client-list-btn"
+                            type="button"
+                            onClick={() => navigate(`/payment/${payment.id}`)}
+                          >
+                            {formatDate(payment.appointmentDate)}
+                            {' '}
+                            -
+                            {' '}
+                            {formatStatus(payment.status)}
+                          </button>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </span>
+
               </>
             ) : null}
           </div>
