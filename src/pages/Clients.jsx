@@ -236,7 +236,6 @@ function ClientsList() {
 
                 <div id="payment-filter">
                   <label htmlFor="filterOptions">
-                    Filtrar por:
                     <select
                       name="filterOptions"
                       id="filterOptions"
