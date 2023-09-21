@@ -143,3 +143,12 @@ li {
   padding: 2px;
   max-width: 100px;
 }
+
+#payment-list {
+  margin-top: -240px;
+  margin-right: 15%;
+}
+
+#payment-list li {
+  padding-bottom: 3px;
+}
