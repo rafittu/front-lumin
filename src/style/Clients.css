@@ -115,7 +115,7 @@ li {
 }
 
 #client-payments {
-  max-height: 270px;
+  max-height: 310px;
   width: 37%;
   margin-top: -90px;
   display: flex;
@@ -145,7 +145,7 @@ li {
 }
 
 #payment-list {
-  margin-top: -240px;
+  margin-top: -270px;
   margin-right: 15%;
 }
 
