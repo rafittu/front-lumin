@@ -11,9 +11,12 @@ import Schedules from './pages/Schedules';
 import AppointmentDetails from './pages/Appointment';
 import AppointmentsByDate from './pages/AppointmentsByDate';
 import NewRecord from './pages/NewRecord';
+import { AppointmentProvider } from './contexts/AppointmentContext';
+import ShowRecord from './components/ShowRecord';
+import ClientsList from './pages/Clients';
+import ClientPayment from './pages/ClientPayment';
 
 import './style/App.css';
-import { AppointmentProvider } from './contexts/AppointmentContext';
 
 function App() {
   return (
@@ -21,6 +24,13 @@ function App() {
       <UserProvider>
         <AppointmentProvider>
           <Routes>
+            <Route
+              exact
+              path="payment/:paymentId"
+              element={<ClientPayment />}
+            />
+            <Route exact path="clients" element={<ClientsList />} />
+            <Route exact path="record/:recordId" element={<ShowRecord />} />
             <Route exact path="record/new" element={<NewRecord />} />
             <Route
               exact
