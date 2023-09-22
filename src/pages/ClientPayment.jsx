@@ -75,11 +75,23 @@ function ClientPayment() {
 
     const isPaymentValid = validatePayment(requestBody);
 
-    console.log(isPaymentValid);
-    console.log(updatePaymentErrors);
-
     if (isPaymentValid) {
-      console.log(requestBody);
+      try {
+        const response = await axios.patch(
+          `http://localhost:3001/payment/update/${paymentId}`,
+          requestBody,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+
+        setPaymentData(response.data);
+        setIsEditing(false);
+      } catch (error) {
+        setApiErrors('Falha ao atualizar o pagamento');
+      }
     }
   };
 
@@ -149,7 +161,7 @@ function ClientPayment() {
                 <input
                   type="text"
                   value={paymentData.totalPaid || ''}
-                  placeholder="R$00,00"
+                  placeholder="00.00"
                   onChange={(e) => setPaymentData({ ...paymentData, totalPaid: e.target.value })}
                 />
               ) : (
