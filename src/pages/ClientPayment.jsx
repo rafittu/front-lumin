@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+import '../style/ClientPayment.css';
+
 function ClientPayment() {
   const { paymentId } = useParams();
 
@@ -131,12 +133,12 @@ function ClientPayment() {
         {appointmentData && (
           <span id="payment-reference">
             <p>
-              Cliente:
+              <strong>Cliente:</strong>
               {' '}
               {appointmentData.clientName}
             </p>
             <p>
-              Data referência:
+              <strong>Data referência:</strong>
               {' '}
               {formatDate(appointmentData.appointmentDate)}
             </p>
@@ -148,20 +150,22 @@ function ClientPayment() {
           {paymentData && (
           <div className="payment-details">
             <p>
-              Data de Pagamento:
+              <strong>Data de Pagamento:</strong>
               {' '}
               {isEditing ? (
                 <input
                   type="date"
                   value={paymentData.paymentDate || ''}
                   onChange={(e) => setPaymentData({ ...paymentData, paymentDate: e.target.value })}
+                  className="edit-payment"
                 />
               ) : (
                 formatDate(paymentData.paymentDate) || 'Não especificada'
               )}
             </p>
+
             <p>
-              Forma de Pagamento:
+              <strong>Forma de Pagamento:</strong>
               {' '}
               {isEditing ? (
                 <select
@@ -169,6 +173,7 @@ function ClientPayment() {
                   onChange={(e) => {
                     setPaymentData({ ...paymentData, paymentMethod: e.target.value });
                   }}
+                  className="edit-payment"
                 >
                   <option value="Dinheiro">Dinheiro</option>
                   <option value="PIX">PIX</option>
@@ -177,13 +182,15 @@ function ClientPayment() {
                 paymentData.paymentMethod || 'Não especificada'
               )}
             </p>
+
             <p>
-              Status:
+              <strong>Status:</strong>
               {' '}
               {isEditing ? (
                 <select
                   value={paymentData.status || ''}
                   onChange={(e) => setPaymentData({ ...paymentData, status: e.target.value })}
+                  className="edit-payment"
                 >
                   <option value="OPEN">aberto</option>
                   <option value="PAID">pago</option>
@@ -192,8 +199,9 @@ function ClientPayment() {
                 formatStatus(paymentData.status) || 'Não especificado'
               )}
             </p>
+
             <p>
-              Total Pago:
+              <strong>Total Pago:</strong>
               {' '}
               {isEditing ? (
                 <input
@@ -201,9 +209,10 @@ function ClientPayment() {
                   value={paymentData.totalPaid || ''}
                   placeholder="00.00"
                   onChange={(e) => setPaymentData({ ...paymentData, totalPaid: e.target.value })}
+                  className="edit-payment"
                 />
               ) : (
-                paymentData.totalPaid || 'Não especificado'
+                `R$ ${paymentData.totalPaid}` || 'Não especificado'
               )}
             </p>
           </div>
@@ -211,7 +220,7 @@ function ClientPayment() {
 
           {updatePaymentErrors && <div className="error-message">{updatePaymentErrors}</div>}
 
-          <div className="edit-button">
+          <div className="inputs-buttons">
             {isEditing ? (
               <button type="button" onClick={handleUpdatePayment}>Salvar</button>
             ) : (
