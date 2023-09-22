@@ -16,6 +16,8 @@ function ClientPayment() {
   const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
+    let appointmentId;
+
     const fetchPaymentDetails = async () => {
       try {
         const response = await axios.get(
@@ -28,6 +30,7 @@ function ClientPayment() {
         );
 
         setPaymentData(response.data);
+        appointmentId = response.data.appointmentId;
       } catch (error) {
         setApiErrors('falha ao buscar do pagamento');
       }
@@ -42,7 +45,7 @@ function ClientPayment() {
               Authorization: `Bearer ${accessToken}`,
             },
             params: {
-              appointmentId: paymentData.appointmentId,
+              appointmentId,
             },
           },
         );
@@ -125,9 +128,21 @@ function ClientPayment() {
       <div id="payment-container">
         <h1>Financeiro</h1>
 
+        {appointmentData && (
+          <span id="payment-reference">
+            <p>
+              Cliente:
+              {' '}
+              {appointmentData.clientName}
+            </p>
+            <p>
+              Data referência:
+              {' '}
+              {formatDate(appointmentData.appointmentDate)}
+            </p>
+          </span>
+        )}
         {apiErrors && <div className="error-message">{apiErrors}</div>}
-
-        {updatePaymentErrors && <div className="error-message">{updatePaymentErrors}</div>}
 
         <div id="payment-details">
           {paymentData && (
@@ -193,6 +208,8 @@ function ClientPayment() {
             </p>
           </div>
           )}
+
+          {updatePaymentErrors && <div className="error-message">{updatePaymentErrors}</div>}
 
           <div className="edit-button">
             {isEditing ? (
