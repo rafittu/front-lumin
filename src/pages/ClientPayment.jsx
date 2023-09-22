@@ -9,6 +9,7 @@ function ClientPayment() {
   const [apiErrors, setApiErrors] = useState('');
   const [paymentData, setPaymentData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [updatePaymentErrors, setUpdatePaymentErrors] = useState(null);
 
   const accessToken = localStorage.getItem('accessToken');
 
@@ -43,6 +44,45 @@ function ClientPayment() {
     return '';
   };
 
+  const validatePayment = (requestBody) => {
+    setUpdatePaymentErrors(null);
+
+    if (requestBody.status === 'PAID') {
+      if (!requestBody.paymentDate || !requestBody.paymentMethod || !requestBody.totalPaid) {
+        setUpdatePaymentErrors('Para marcar como "pago", preencha todos os campos');
+        return false;
+      }
+    }
+
+    if (requestBody.totalPaid) {
+      const totalPaidRegex = /^\d+\.\d{2}$/;
+      if (!totalPaidRegex.test(requestBody.totalPaid)) {
+        setUpdatePaymentErrors('O total pago deve ser no formato 00.00');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleUpdatePayment = async () => {
+    const requestBody = {
+      paymentDate: paymentData.paymentDate,
+      paymentMethod: paymentData.paymentMethod,
+      totalPaid: paymentData.totalPaid,
+      status: paymentData.status,
+    };
+
+    const isPaymentValid = validatePayment(requestBody);
+
+    console.log(isPaymentValid);
+    console.log(updatePaymentErrors);
+
+    if (isPaymentValid) {
+      console.log(requestBody);
+    }
+  };
+
   return (
     <section>
       <Navbar />
@@ -51,6 +91,8 @@ function ClientPayment() {
         <h1>Financeiro</h1>
 
         {apiErrors && <div className="error-message">{apiErrors}</div>}
+
+        {updatePaymentErrors && <div className="error-message">{updatePaymentErrors}</div>}
 
         <div id="payment-details">
           {paymentData && (
@@ -93,8 +135,8 @@ function ClientPayment() {
                   value={paymentData.status || ''}
                   onChange={(e) => setPaymentData({ ...paymentData, status: e.target.value })}
                 >
-                  <option value="aberto">aberto</option>
-                  <option value="pago">pago</option>
+                  <option value="OPEN">aberto</option>
+                  <option value="PAID">pago</option>
                 </select>
               ) : (
                 formatStatus(paymentData.status) || 'Não especificado'
@@ -119,7 +161,7 @@ function ClientPayment() {
 
           <div className="edit-button">
             {isEditing ? (
-              <button type="button">Salvar</button>
+              <button type="button" onClick={handleUpdatePayment}>Salvar</button>
             ) : (
               <button type="button" onClick={() => setIsEditing(true)}>Editar</button>
             )}
