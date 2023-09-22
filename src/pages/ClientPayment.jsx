@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+import '../style/ClientPayment.css';
+
 function ClientPayment() {
   const { paymentId } = useParams();
 
