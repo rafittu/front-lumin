@@ -133,12 +133,12 @@ function ClientPayment() {
         {appointmentData && (
           <span id="payment-reference">
             <p>
-              Cliente:
+              <strong>Cliente:</strong>
               {' '}
               {appointmentData.clientName}
             </p>
             <p>
-              Data referência:
+              <strong>Data referência:</strong>
               {' '}
               {formatDate(appointmentData.appointmentDate)}
             </p>

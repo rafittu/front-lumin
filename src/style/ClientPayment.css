@@ -23,3 +23,16 @@
   margin-top: 9px;
   padding: 27px;
 }
+
+#payment-reference {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 80%;
+  margin: 21px;
+}
+
+#payment-reference p {
+  margin-right: 45px;
+  margin-left: 27px;
+}
