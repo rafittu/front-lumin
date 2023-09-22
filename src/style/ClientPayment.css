@@ -60,3 +60,13 @@
     font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   }
+
+  .edit-payment {
+    background-color: rgba(204, 193, 193, 0.205);
+    color: rgb(1, 8, 14);
+    border-radius: 10px;
+    margin-left: 27px;
+    padding: 3px;
+    padding-left: 15px;
+    max-width: 150px;
+  }
