@@ -10,7 +10,7 @@ function ClientPayment() {
 
   const [paymentData, setPaymentData] = useState(null);
   const [updatePaymentErrors, setUpdatePaymentErrors] = useState(null);
-  const [appointmentData, setAppointmentData] = useState(null);
+  const [recordData, setRecordData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [apiErrors, setApiErrors] = useState('');
 
@@ -18,7 +18,25 @@ function ClientPayment() {
   const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
-    let appointmentId;
+    const fetchAppointmentDetails = async (recordId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/record/${recordId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              professionalId: userData.id,
+            },
+          },
+        );
+
+        setRecordData(response.data);
+      } catch (error) {
+        setApiErrors('falha ao buscar informações adicionais sobre o pagamento');
+      }
+    };
 
     const fetchPaymentDetails = async () => {
       try {
@@ -32,34 +50,13 @@ function ClientPayment() {
         );
 
         setPaymentData(response.data);
-        appointmentId = response.data.appointmentId;
+        fetchAppointmentDetails(response.data.appointmentId);
       } catch (error) {
         setApiErrors('falha ao buscar do pagamento');
       }
     };
 
-    const fetchAppointmentDetails = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/schedules/professional/filter/${userData.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            params: {
-              appointmentId,
-            },
-          },
-        );
-
-        setAppointmentData(response.data.appointments[0]);
-      } catch (error) {
-        setApiErrors('falha ao buscar informações adicionais sobre o pagamento');
-      }
-    };
-
     fetchPaymentDetails();
-    fetchAppointmentDetails();
   }, [paymentId]);
 
   const formatStatus = (status) => (status === 'OPEN' ? 'aberto' : 'pago');
@@ -130,17 +127,17 @@ function ClientPayment() {
       <div id="payment-container">
         <h1>Financeiro</h1>
 
-        {appointmentData && (
+        {recordData && (
           <span id="payment-reference">
             <p>
               <strong>Cliente:</strong>
               {' '}
-              {appointmentData.clientName}
+              {recordData.clientName}
             </p>
             <p>
               <strong>Data referência:</strong>
               {' '}
-              {formatDate(appointmentData.appointmentDate)}
+              {formatDate(recordData.scheduledDate)}
             </p>
           </span>
         )}
