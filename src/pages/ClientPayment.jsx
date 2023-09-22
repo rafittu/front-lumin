@@ -6,11 +6,13 @@ import Navbar from '../components/Navbar';
 function ClientPayment() {
   const { paymentId } = useParams();
 
-  const [apiErrors, setApiErrors] = useState('');
   const [paymentData, setPaymentData] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [updatePaymentErrors, setUpdatePaymentErrors] = useState(null);
+  const [appointmentData, setAppointmentData] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [apiErrors, setApiErrors] = useState('');
 
+  const userData = JSON.parse(localStorage.getItem('userData'));
   const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -31,7 +33,28 @@ function ClientPayment() {
       }
     };
 
+    const fetchAppointmentDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/schedules/professional/filter/${userData.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              appointmentId: paymentData.appointmentId,
+            },
+          },
+        );
+
+        setAppointmentData(response.data.appointments[0]);
+      } catch (error) {
+        setApiErrors('falha ao buscar informações adicionais sobre o pagamento');
+      }
+    };
+
     fetchPaymentDetails();
+    fetchAppointmentDetails();
   }, [paymentId]);
 
   const formatStatus = (status) => (status === 'OPEN' ? 'aberto' : 'pago');
