@@ -14,6 +14,7 @@ import NewRecord from './pages/NewRecord';
 import { AppointmentProvider } from './contexts/AppointmentContext';
 import ShowRecord from './components/ShowRecord';
 import ClientsList from './pages/Clients';
+import ClientPayment from './pages/ClientPayment';
 
 import './style/App.css';
 
@@ -23,6 +24,11 @@ function App() {
       <UserProvider>
         <AppointmentProvider>
           <Routes>
+            <Route
+              exact
+              path="payment/:paymentId"
+              element={<ClientPayment />}
+            />
             <Route exact path="clients" element={<ClientsList />} />
             <Route exact path="record/:recordId" element={<ShowRecord />} />
             <Route exact path="record/new" element={<NewRecord />} />
