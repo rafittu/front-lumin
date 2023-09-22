@@ -209,7 +209,7 @@ function ClientPayment() {
                   className="edit-payment"
                 />
               ) : (
-                `R$ ${paymentData.totalPaid}` || 'Não especificado'
+                paymentData.totalPaid || 'Não especificado'
               )}
             </p>
           </div>
