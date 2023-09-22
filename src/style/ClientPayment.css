@@ -36,3 +36,15 @@
   margin-right: 45px;
   margin-left: 27px;
 }
+
+#payment-details {
+    background-color: #ffffff7a;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin-top: 21px;
+    margin-bottom: 45px;
+    padding: 21px 37px 21px 37px;
+  }
