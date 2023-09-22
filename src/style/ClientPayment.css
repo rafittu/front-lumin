@@ -47,4 +47,16 @@
     margin-top: 21px;
     margin-bottom: 45px;
     padding: 21px 37px 21px 37px;
+}
+
+#payment-details button {
+    margin-top: 21px;
+  }
+
+  #payment-details p {
+    margin: 10px 0;
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   }
